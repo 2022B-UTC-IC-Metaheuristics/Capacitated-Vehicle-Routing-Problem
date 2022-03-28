@@ -30,6 +30,17 @@ El esquema de la solución queda igual al siguiente:
  ![Diagrama del ejemplo](https://developers.google.com/optimization/images/routing/vrpgs_solution.svg)
 
 #### Modelo y restricciones
+El modelo matematico de la función del CVRP está definida de la siguiente forma: 
+
+$ \sum_{i=1}^{\mathbb{N}}\sum_{i=1,j=1}^{\mathbb{N}} c_{ij}x_{ij} $
+
+Donde
+
+
+cij: Costo de recorrer la distancia entre el nodo  al nodo.
+
+N: Número de nodos.
+
 Nuestra *función objetivo* para la evalución de la solución queda de la siguiente forma:
 
 ```python
