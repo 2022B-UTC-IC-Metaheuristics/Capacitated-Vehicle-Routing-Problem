@@ -68,41 +68,5 @@ def f(self, solution):
 
 En esta función se están utilizando variables globales como cual es el lugar origen, las distancias, las demandas de los lugares y las capacidades del vehículo. Cada vez que un vehiculo excede su capacidad, se penaliza la solución para que no sea la optima.
 
-Para la generación de una *solución inicial* utilizamos la siguiente función:
-```python
-def generate_initial_solution(self, solution):
-	global vis
-	global vehicles
-	global locations
-	for i in range(vehicles):
-		y = rd.randrange(locations)+1
-		while vis[y]!=0:
-			y = rd.randrange(locations)+1
-		vis[y] = i
-		solution[i].append(y)
-	for i in range(locations):
-		y = rd.randrange(vehicles)
-		if vis[i]==0:
-			vis[i] = y
-		solution[y].append(i)
-	return solution
-```
-
-Para la generación de una solución vecina de una forma aleatoria utilizamos las siguiente función:
-```python
-def generate_neighbor(self, solution):
-  global locations
-  global vehicles
-  global vis
-  x = rd.randrange(vehicles+1)
-  y = rd.randrange(locations+1)
-  z = vis[y]
-  pos = 0
-  for i in solution[z]:
-    if(i==y):
-      break
-    ++pos
-  np.delete(solution[z],pos)
-  solution[x].append(y)
-  return solution
-```
+#### Instancias a ejecutar. 
+Se encuentran en el documento adjunto. 
