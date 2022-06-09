@@ -15,6 +15,11 @@ desde ese punto con respecto a los demás. La distancia a el mismo nodo es 0.
 * Demandas de cada destino: Vector en el que cada elemento es el número de objetos a entregar o recibir en el lugar i. Si el número de demanda es negativo se va a recoger, si es positivo se va a entregar.
 * Capacidades de cada vehiculo: Vector en el que cada elemento es la carga máxima para el vehiculo i. No puede existir una carga negativa.
 
+#### ¿Cómo se representa una solución? 
+Se representa por un arreglo de sub arreglos, en el que cada arreglo nos dice el camino que tomará el camión en esa posición. En caso de que el camión no sea utilizado, no se mostrará nada.
+Ejemplo: 
+[[0,3,4,0],[0,1,2,0]]
+
 #### Ejemplo
 Se tienen las siguientes ubicaciones, numeradas del 0 al 16, donde la ubicación 0 es la salida. En la parte inferior derecha se tiene la cantidad que se va a recoger.
  ![Diagrama del ejemplo](https://developers.google.com/optimization/images/routing/cvrp.svg)
