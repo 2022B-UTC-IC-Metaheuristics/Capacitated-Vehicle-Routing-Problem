@@ -7,21 +7,21 @@ Los problemas de routeo son muy comunes en tareas relacionadas en transporte rel
 
 #### ¿Qué vamos a necesitar para un problema?
 Nosotros tomamos en consideración algunos elementos, como los listados a continuación.
-* Tamaño de la matriz:  Matriz cuadrada que nos delimitará el área de la ciudad en donde se encuentran los lugares para entregar o recoger. Esta debe ser cuadrada.
+* Tamaño de la matriz:  Matriz cuadrada que nos delimitará el área de la ciudad en donde se encuentran los lugares para entregar o recoger.
 * Distancias en forma matricial: Cada renglón representa la distancia
 desde ese punto con respecto a los demás. La distancia a el mismo nodo es 0.
-* Número de Vehiculos: El número máximo de vehiculos en ese problema especifico.
-* Nodo de origen: El número de nodo seleccionado como el origen. En caso de ser omitido, el nodo de origen pasa a ser el nodo 0.
+* Número de Vehiculos: El máximo de vehiculos en este problema es especifico.
+* Nodo de origen: El número del nodo seleccionado como el origen. En caso de ser omitido, el nodo de origen pasa a ser el nodo 0.
 * Demandas de cada destino: Vector en el que cada elemento es el número de objetos a entregar o recibir en el lugar i. Si el número de demanda es negativo se va a recoger, si es positivo se va a entregar.
 * Capacidades de cada vehiculo: Vector en el que cada elemento es la carga máxima para el vehiculo i. No puede existir una carga negativa.
 
 #### ¿Cómo se representa una solución? 
-Se representa por un arreglo de sub arreglos, en el que cada arreglo nos dice el camino que tomará el camión en esa posición. En caso de que el camión no sea utilizado, no se mostrará nada.
+Se representa por un arreglo de sub arreglos, en el que cada subarreglo nos dice el camino que tomará el camión en esa posición. En caso de que el camión no sea utilizado, no se mostrará nada.
 Ejemplo: 
 [[0,3,4,0],[0,1,2,0]]
 
 #### Ejemplo
-Se tienen las siguientes ubicaciones, numeradas del 0 al 16, donde la ubicación 0 es la salida. En la parte inferior derecha se tiene la cantidad que se va a recoger.
+Se tienen las siguientes ubicaciones, numeradas del 0 al 16, donde la ubicación 0 es la salida. En la parte inferior derecha de cada una se tiene la cantidad que se va a recoger.
  ![Diagrama del ejemplo](https://developers.google.com/optimization/images/routing/cvrp.svg)
 
  Para este problema se van a tener un total de 4 vehiculos con una carga máxima de 15 unidades cada uno.
@@ -29,7 +29,7 @@ Se tienen las siguientes ubicaciones, numeradas del 0 al 16, donde la ubicación
 *El problema es encontrar una asignación de rutas que sean las más cortas en distancia y que el total de carga de un vehículo nunca sobrepase su capacidad de carga.*
 
 #### Solución
-La solución propuesta al problema es dividirlo en segmentos pequeños, que cada uno de los vehiculos va a recorrer. Cada vehiculo ahora se convierte en un problema del agente viajero y se visitian las ciudades en base al menor costos de transporte de productos.
+La solución propuesta al problema es dividirlo en segmentos pequeños que cada uno de los vehiculos va a recorrer. Cada vehiculo ahora se convierte en un problema del agente viajero y se visitan las ciudades en base al menor costo de transporte de productos.
 El esquema de la solución queda igual al siguiente:
 
  ![Diagrama del ejemplo](https://developers.google.com/optimization/images/routing/vrpgs_solution.svg)
@@ -40,9 +40,12 @@ El modelo matematico de la función del CVRP está definida de la siguiente form
 ![Formulación matematica](https://repository.uaeh.edu.mx/scige/boletin/sahagun/n10/multimedia/a2/a2_2.jpg)
 
 Donde
+{
+A_{i} Capacidad de cada vehículo
+}
 * A: Capacidad de cada vehículo
 * V: Número máximo de vehículos
-* Fij: Flujo del producto desde el nodo  a  
+* Fij: Flujo del producto desde el nodo a  
 * Z: Costo total de transportación
 * di: Demanda en el nodo
 * cij: Costo de recorrer la distancia entre el nodo  al nodo
@@ -71,7 +74,7 @@ def f(self, solution):
 	return cost
 ```
 
-En esta función se están utilizando variables globales como cual es el lugar origen, las distancias, las demandas de los lugares y las capacidades del vehículo. Cada vez que un vehiculo excede su capacidad, se penaliza la solución para que no sea la optima.
+En esta función se están utilizando variables globales como son el lugar de origen, las distancias, las demandas de los lugares y las capacidades del vehículo. Cada vez que un vehiculo excede su capacidad, se penaliza la solución para que no sea la óptima.
 
 #### Instancias a ejecutar. 
 Se encuentran en el documento adjunto. 
