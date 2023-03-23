@@ -40,7 +40,7 @@ El modelo matematico de la función del CVRP está definida de la siguiente form
 ![Formulación matematica](https://repository.uaeh.edu.mx/scige/boletin/sahagun/n10/multimedia/a2/a2_2.jpg)
 
 Donde
-${A_{i} }$ Capacidad de cada vehículo 
+*${A }$ Capacidad de cada vehículo 
 * A: Capacidad de cada vehículo
 * V: Número máximo de vehículos
 * Fij: Flujo del producto desde el nodo a  
