@@ -1,9 +1,20 @@
 # The Capacited Vehicle Routing Problem
 
 #### Descripción del problema.
-El problema de ruta de vehículos capacitados (CVRP) es un VRP en el que los vehículos con capacidad de carga limitada tienen que recoger o entregar artículos en varios lugares. Los artículos tienen una cantidad, como el peso o el volumen, y los vehículos tienen una capacidad máxima que pueden transportar. *El problema es recoger o entregar los artículos con el menor coste posible, sin exceder nunca la capacidad de los vehículos.*
+
+El Capacitated Vehicle Routing Problem (CVRP) es un problema de optimización combinatoria que se enfoca en encontrar la ruta más eficiente para un conjunto de vehículos que deben cumplir con la entrega de bienes o servicios a un conjunto de clientes, tomando en cuenta las restricciones de capacidad de los vehículos.
+
+En este problema, se tiene un conjunto de vehículos, cada uno con una capacidad máxima de carga. Además, se cuenta con un conjunto de clientes que deben ser atendidos, cada uno con una demanda específica de bienes o servicios. El objetivo es planificar la ruta que debe seguir cada vehículo para atender a todos los clientes, de manera que se minimice la distancia recorrida por los vehículos y se respeten las restricciones de capacidad de carga de cada uno.
+
+La resolución del problema CVRP es compleja debido a la gran cantidad de posibles combinaciones de rutas que se pueden generar. Además, la capacidad limitada de los vehículos y las restricciones de tiempo pueden hacer que la planificación de rutas sea aún más desafiante. 
+
 #### Aplicaciones
-Los problemas de routeo son muy comunes en tareas relacionadas en transporte relacionadas con la logistica o distribución, esto porque su resultado da un recorrido que es considerado como óptimo dadas distintas variables y costos determinados en su planteamiento.
+
+Este problema es común en logística, donde es necesario planificar rutas de entrega eficientes para minimizar los costos de transporte y asegurar que todos los clientes sean atendidos en el tiempo previsto. Algunos de los ejemplos más claros son:
+* La recolección de residuos
+* El transporte de pasajeros.
+* La programación de la producción en la industria manufacturera.
+* Entregas de paqueterías.
 
 #### ¿Qué vamos a necesitar para un problema?
 Nosotros tomamos en consideración algunos elementos, como los listados a continuación.
