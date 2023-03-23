@@ -31,6 +31,16 @@ Se representa por un arreglo de sub arreglos, en el que cada subarreglo nos dice
 Ejemplo: 
 [[0,7,1,4,3,0],[0,8,6,2,5,0],[0,12,11,15,13,0],[0,9,10,16,14,0]]
 
+${
+	\begin{equation}
+	\begin{pmatrix}
+	2 & 5 & 0\\
+	7 & 3 & 8\\
+	3 & 0 & 1
+	\end{pmatrix}
+	\end{equation} 
+}$
+
 #### Ejemplo
 Se tienen las siguientes ubicaciones, numeradas del 0 al 16, donde la ubicación 0 es la salida. En la parte inferior derecha de cada una se tiene la cantidad que se va a recoger.
  ![Diagrama del ejemplo](https://developers.google.com/optimization/images/routing/cvrp.svg)
