@@ -29,7 +29,7 @@ desde ese punto con respecto a los demás. La distancia a el mismo nodo es 0.
 #### ¿Cómo se representa una solución? 
 Se representa por un arreglo de sub arreglos, en el que cada subarreglo nos dice el camino que tomará el camión en esa posición. En caso de que el camión no sea utilizado, no se mostrará nada.
 Ejemplo: 
-[[0,3,4,0],[0,1,2,0]]
+[[0,7,1,4,3,0],[0,8,6,2,5,0],[0,12,11,15,13,0],[0,9,10,16,14,0]]
 
 #### Ejemplo
 Se tienen las siguientes ubicaciones, numeradas del 0 al 16, donde la ubicación 0 es la salida. En la parte inferior derecha de cada una se tiene la cantidad que se va a recoger.
