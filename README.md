@@ -89,3 +89,68 @@ En esta función se están utilizando variables globales como son el lugar de or
 
 #### Instancias a ejecutar. 
 Se encuentran en el documento adjunto. 
+
+#### Alternativa de solución secuencial
+A continuación se muestra una solución alternativa al problema de CVRP aunque no es tan preciso eficiente.
+
+```python
+import numpy as np
+
+# función para calcular la distancia entre dos nodos
+def calcular_distancia(nodo1, nodo2):
+    return np.sqrt((nodo1[0] - nodo2[0])**2 + (nodo1[1] - nodo2[1])**2)
+
+# función para encontrar el camino óptimo
+def encontrar_camino_optimo(nodos, capacidad_vehiculos, n_vehiculos):
+    n_nodos = len(nodos)
+    distancia_minima = float("inf")
+    for i in range(n_nodos):
+        for j in range(n_nodos):
+            if i != j:
+                demanda_total = sum([nodos[k][2] for k in range(n_nodos)])
+                if demanda_total > capacidad_vehiculos * n_vehiculos:
+                    continue
+                rutas = [[] for _ in range(n_vehiculos)]
+                ruta_actual = 0
+                capacidad_actual = capacidad_vehiculos
+                distancia_actual = 0
+                visitados = set()
+                visitados.add(i)
+                visitados.add(j)
+                rutas[ruta_actual].append(i)
+                while len(visitados) < n_nodos:
+                    ultimo_nodo = rutas[ruta_actual][-1]
+                    mejor_distancia = float("inf")
+                    mejor_nodo = None
+                    for k in range(n_nodos):
+                        if k not in visitados:
+                            distancia = calcular_distancia(nodos[ultimo_nodo], nodos[k])
+                            if nodos[k][2] > capacidad_actual:
+                                continue
+                            if distancia < mejor_distancia:
+                                mejor_distancia = distancia
+                                mejor_nodo = k
+                    if mejor_nodo is not None:
+                        rutas[ruta_actual].append(mejor_nodo)
+                        visitados.add(mejor_nodo)
+                        distancia_actual += mejor_distancia
+                        capacidad_actual -= nodos[mejor_nodo][2]
+                    else:
+                        ruta_actual += 1
+                        capacidad_actual = capacidad_vehiculos
+                        rutas[ruta_actual].append(i)
+                if distancia_actual < distancia_minima:
+                    distancia_minima = distancia_actual
+                    mejor_ruta = rutas
+    return mejor_ruta, distancia_minima
+
+# Ejemplo de uso
+nodos = np.array([[0, 0, 0], [3, 0, 1], [6, 0, 2], [0, 4, 3], [3, 4, 4], [6, 4, 5]])
+capacidad_vehiculos = 5
+n_vehiculos = 2
+mejor_ruta, distancia_minima = encontrar_camino_optimo(nodos, capacidad_vehiculos, n_vehiculos)
+print("La distancia mínima es:", distancia_minima)
+print("Las rutas óptimas son:")
+for ruta in mejor_ruta:
+    print(ruta)
+```
