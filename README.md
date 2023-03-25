@@ -145,6 +145,7 @@ def encontrar_camino_optimo(nodos, capacidad_vehiculos, n_vehiculos):
     return mejor_ruta, distancia_minima
 
 # Ejemplo de uso
+#coordenadaX,coordenadaY,demanda
 nodos = np.array([[0, 0, 0], [3, 0, 1], [6, 0, 2], [0, 4, 3], [3, 4, 4], [6, 4, 5]])
 capacidad_vehiculos = 5
 n_vehiculos = 2
