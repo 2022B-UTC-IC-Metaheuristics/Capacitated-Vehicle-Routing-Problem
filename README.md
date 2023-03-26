@@ -24,30 +24,30 @@ Nosotros tomamos en consideración algunos elementos, como los listados a contin
 * Demandas de cada destino: Matriz en cuál cada renglón corresponde al número de nodo y su respectiva demanda.
 
 ### Ejemplo de una instancia:
-NAME : toy.vrp
-COMMENT : toy instance>
-TYPE : CVRP
-DIMENSION : 6
-EDGE_WEIGHT_TYPE : EUC_2D
-CAPACITY : 30
-NODE_COORD_SECTION
-1 38 46
-2 59 46
-3 96 42
-4 47 61
-5 26 15
-6 66 6
-DEMAND_SECTION
-1 0
-2 16
-3 18
-4 1
-5 13
-6 8
-DEPOT_SECTION
-1
--1
-EOF
+NAME : toy.vrp  
+COMMENT : toy instance>  
+TYPE : CVRP  
+DIMENSION : 6  
+EDGE_WEIGHT_TYPE : EUC_2D  
+CAPACITY : 30  
+NODE_COORD_SECTION  
+1 38 46  
+2 59 46  
+3 96 42  
+4 47 61  
+5 26 15  
+6 66 6  
+DEMAND_SECTION  
+1 0  
+2 16  
+3 18  
+4 1  
+5 13  
+6 8  
+DEPOT_SECTION  
+1  
+-1  
+EOF  
 
 #### ¿Cómo se representa una solución? 
 Se representa por un arreglo de sub arreglos, en el que cada subarreglo nos dice el camino que tomará el camión en esa posición. En caso de que el camión no sea utilizado, no se mostrará nada.
