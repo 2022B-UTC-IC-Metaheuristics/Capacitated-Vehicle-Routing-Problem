@@ -18,13 +18,10 @@ Este problema es común en logística, donde es necesario planificar rutas de en
 
 #### ¿Qué vamos a necesitar para un problema?
 Nosotros tomamos en consideración algunos elementos, como los listados a continuación.
-* Tamaño de la matriz:  Matriz cuadrada que nos delimitará el área de la ciudad en donde se encuentran los lugares para entregar o recoger.
-* Distancias en forma matricial: Cada renglón representa la distancia
-desde ese punto con respecto a los demás. La distancia a el mismo nodo es 0.
-* Número de Vehiculos: El máximo de vehiculos en este problema es especifico.
-* Nodo de origen: El número del nodo seleccionado como el origen. En caso de ser omitido, el nodo de origen pasa a ser el nodo 0.
 * Demandas de cada destino: Vector en el que cada elemento es el número de objetos a entregar o recibir en el lugar i. Si el número de demanda es negativo se va a recoger, si es positivo se va a entregar.
 * Capacidades de cada vehiculo: Vector en el que cada elemento es la carga máxima para el vehiculo i. No puede existir una carga negativa.
+* Distancias en forma matricial: Cada renglón representa la distancia
+desde ese punto con respecto a los demás. La distancia a el mismo nodo es 0.
 
 #### ¿Cómo se representa una solución? 
 Se representa por un arreglo de sub arreglos, en el que cada subarreglo nos dice el camino que tomará el camión en esa posición. En caso de que el camión no sea utilizado, no se mostrará nada.
