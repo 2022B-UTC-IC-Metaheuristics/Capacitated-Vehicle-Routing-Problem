@@ -18,10 +18,36 @@ Este problema es común en logística, donde es necesario planificar rutas de en
 
 #### ¿Qué vamos a necesitar para un problema?
 Nosotros tomamos en consideración algunos elementos, como los listados a continuación.
-* Demandas de cada destino: Vector en el que cada elemento es el número de objetos a entregar o recibir en el lugar i. Si el número de demanda es negativo se va a recoger, si es positivo se va a entregar.
-* Capacidades de cada vehiculo: Vector en el que cada elemento es la carga máxima para el vehiculo i. No puede existir una carga negativa.
-* Distancias en forma matricial: Cada renglón representa la distancia
-desde ese punto con respecto a los demás. La distancia a el mismo nodo es 0.
+* Dimension: Número de nodos.
+* Capacidad de los vehículos: Es la misma para todos.
+* Número de nodo y coordenas en forma matricial: Cada renglón posee el número del nodo y sus coordenadas X y Y.
+* Demandas de cada destino: Matriz en cuál cada renglón corresponde al número de nodo y su respectiva demanda.
+
+###Ejemplo de una instancia:
+NAME : toy.vrp
+COMMENT : toy instance>
+TYPE : CVRP
+DIMENSION : 6
+EDGE_WEIGHT_TYPE : EUC_2D
+CAPACITY : 30
+NODE_COORD_SECTION
+1 38 46
+2 59 46
+3 96 42
+4 47 61
+5 26 15
+6 66 6
+DEMAND_SECTION
+1 0
+2 16
+3 18
+4 1
+5 13
+6 8
+DEPOT_SECTION
+1
+-1
+EOF
 
 #### ¿Cómo se representa una solución? 
 Se representa por un arreglo de sub arreglos, en el que cada subarreglo nos dice el camino que tomará el camión en esa posición. En caso de que el camión no sea utilizado, no se mostrará nada.
