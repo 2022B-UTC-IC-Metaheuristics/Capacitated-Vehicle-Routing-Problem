@@ -18,10 +18,11 @@ Este problema es común en logística, donde es necesario planificar rutas de en
 
 #### ¿Qué vamos a necesitar para un problema?
 Nosotros tomamos en consideración algunos elementos, como los listados a continuación.
-* Dimension: Número de nodos.
+* Dimension: Número de nodos y depósitos.
 * Capacidad de los vehículos: Es la misma para todos.
 * Número de nodo y coordenas en forma matricial: Cada renglón posee el número del nodo y sus coordenadas X y Y.
 * Demandas de cada destino: Matriz en cuál cada renglón corresponde al número de nodo y su respectiva demanda.
+* Nodo origen: Número de nodo inicial.
 
 ### Ejemplo de una instancia:
 NAME : toy.vrp  
