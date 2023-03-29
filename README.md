@@ -112,7 +112,95 @@ def f(self, solution):
 En esta función se están utilizando variables globales como son el lugar de origen, las distancias, las demandas de los lugares y las capacidades del vehículo. Cada vez que un vehiculo excede su capacidad, se penaliza la solución para que no sea la óptima.
 
 #### Instancias a ejecutar. 
-Se encuentran en el documento adjunto. 
+Se encuentran en el documento adjunto.
+
+### Lectura de instancias
+Se proporciona el código en python para la lectura correcta de los archivos y almacenar los datos adecuadamente.
+```python
+def getData(lenData):
+    data = []
+    for i in np.arange(lenData):
+        data.append([])
+        data[i].append(-1)
+        data[i].append([-1,-1])
+        data[i].append(-1)
+    
+    return data
+    
+def convertListCharToString(listChar):
+    new = ""
+    for x in listChar:
+        new += x
+    return new
+     
+
+with open('./A-n33-k5.txt') as f:
+    file = f.readlines()
+
+string = convertListCharToString(file)
+
+stringDimensions = "DIMENSION : "
+dimensionsIndex  = string.find(stringDimensions) + len(stringDimensions)
+dimension = ""
+
+while(string[dimensionsIndex] != '\n'):
+    dimension += string[dimensionsIndex]
+    dimensionsIndex += 1
+
+dimension = int(dimension)
+
+data = getData(dimension)
+
+stringCord = "NODE_COORD_SECTION" 
+
+initialIndex = string.find(stringCord) + len(stringCord) + 2
+
+indicator = 0
+
+i = 0
+while(string[initialIndex] != 'D'):
+    number = ""
+    while(ord(string[initialIndex]) != 32 and string[initialIndex] != '\n'):
+        number += string[initialIndex]
+        initialIndex += 1
+    
+    if(len(number) > 0):        
+        if indicator == 0:
+            data[i][0] = (int(number) - 1)
+            indicator += 1
+        elif indicator == 1:
+            data[i][1][0] = int(number)
+            indicator += 1      
+        elif indicator == 2:
+            data[i][1][1] = int(number)
+            indicator = 0
+            i += 1
+
+    initialIndex +=1
+
+stringCost = "DEMAND_SECTION"
+initialIndex = string.find(stringCost) + len(stringCost) + 2
+
+indicator = 0
+
+i = 0
+while(string[initialIndex] != 'D'):
+    number = ""
+    while(ord(string[initialIndex]) != 32 and string[initialIndex] != '\n'):
+        number += string[initialIndex]
+        initialIndex += 1
+    #print(number)
+    if(len(number) > 0):        
+        if indicator == 0:
+            indicator += 1
+        elif indicator == 1:
+            data[i][2] = int(number)
+            indicator = 0     
+            i += 1
+
+    initialIndex +=1
+print(data)
+```
 
 #### Alternativa de solución secuencial
 A continuación se muestra una solución alternativa al problema de CVRP aunque no es tan preciso eficiente.
