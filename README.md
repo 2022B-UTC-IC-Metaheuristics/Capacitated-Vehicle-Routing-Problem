@@ -115,7 +115,7 @@ En esta función se están utilizando variables globales como son el lugar de or
 Se encuentran en el documento adjunto.
 
 ### Lectura de instancias
-Se proporciona el código en python para la lectura correcta de los archivos y almacenar los datos adecuadamente.
+Se proporciona el código en python para la lectura correcta de los archivos y almacenar los datos. Esto en una matriz en la cual cada renglón sigue el siguiente formato: [Nodo,CoordX,CoordY,Demanda]
 ```python
 def getData(lenData):
     data = []
