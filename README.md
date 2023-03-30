@@ -260,7 +260,7 @@ def encontrar_camino_optimo(nodos, capacidad_vehiculos, n_vehiculos):
 #coordenadaX,coordenadaY,demanda
 nodos = np.array([[0, 0, 0], [3, 0, 1], [6, 0, 2], [0, 4, 3], [3, 4, 4], [6, 4, 5]])
 capacidad_vehiculos = 5
-n_vehiculos = 2
+n_vehiculos = 3
 mejor_ruta, distancia_minima = encontrar_camino_optimo(nodos, capacidad_vehiculos, n_vehiculos)
 print("La distancia mínima es:", distancia_minima)
 print("Las rutas óptimas son:")
