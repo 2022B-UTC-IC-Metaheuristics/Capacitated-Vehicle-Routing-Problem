@@ -87,26 +87,50 @@ Donde
 * ${N:}$ Número de nodos
 
 
-Nuestra *función objetivo* para la evalución de la solución queda de la siguiente forma:
+Nuestra propueta para solución inicial:
 
 ```python
-def f(self, solution):
-	global origin
-	global distances
-	global demands
-	global capacities
-	cost = 0
-	for i in range(vehicles):
-		fill = 0
-		ant = origin
-		for j in M[i]:
-			cost += distances[ant][j]
-			ant = j
-			fill += demands[j]
-		cost += distances[j][origin]
-		if(fill>capacities[i]):
-			cost += 1e10
-	return cost
+def getTotalDemand(self):
+        totalDemand = 0
+        for element in self.data:
+            totalDemand += element[2]
+        return totalDemand
+
+    def getDemand(self, route):
+        demand = 0
+        for node in route:
+            demand += self.data[node][2]
+        return demand
+
+    def create_first_solution(self):
+        totalDemand = self.getTotalDemand()
+        totalCars = math.ceil(totalDemand / self.capacity)
+
+        while(1):
+            routes = []
+            for i in np.arange(totalCars):
+                routes.append([])
+            demands = []
+
+            lista = list(range(1,(len(self.data))))
+            random.shuffle(lista)
+
+            for i in np.arange(len(self.data) - 1):
+                index = random.randint(0,(totalCars - 1))
+                routes[index].append(lista[i])
+
+            for route in routes:
+                demands.append(self.getDemand(route))
+            
+            isUnderDemand = True
+            for demand in demands:
+                if(demand > self.capacity):
+                    isUnderDemand = False
+
+            if(isUnderDemand):
+                break
+
+        return routes
 ```
 
 En esta función se están utilizando variables globales como son el lugar de origen, las distancias, las demandas de los lugares y las capacidades del vehículo. Cada vez que un vehiculo excede su capacidad, se penaliza la solución para que no sea la óptima.
@@ -202,68 +226,63 @@ while(string[initialIndex] != 'D'):
 print(data)
 ```
 
-#### Alternativa de solución secuencial
-A continuación se muestra una solución alternativa al problema de CVRP aunque no es tan preciso eficiente.
+#### Funcion de crear vecinos
 
 ```python
-import numpy as np
+import copy
 
-# función para calcular la distancia entre dos nodos
-def calcular_distancia(nodo1, nodo2):
-    return np.sqrt((nodo1[0] - nodo2[0])**2 + (nodo1[1] - nodo2[1])**2)
+def create_neighbor_solution(self, actual_solution):    
+        while(1):
+            neighbor = copy.deepcopy(actual_solution)
+            idx = random.randint(0,(len(self.data)-2))
 
-# función para encontrar el camino óptimo
-def encontrar_camino_optimo(nodos, capacidad_vehiculos, n_vehiculos):
-    n_nodos = len(nodos)
-    distancia_minima = float("inf")
-    for i in range(n_nodos):
-        for j in range(n_nodos):
-            if i != j:
-                demanda_total = sum([nodos[k][2] for k in range(n_nodos)])
-                if demanda_total > capacidad_vehiculos * n_vehiculos:
-                    continue
-                rutas = [[] for _ in range(n_vehiculos)]
-                ruta_actual = 0
-                capacidad_actual = capacidad_vehiculos
-                distancia_actual = 0
-                visitados = set()
-                visitados.add(i)
-                visitados.add(j)
-                rutas[ruta_actual].append(i)
-                while len(visitados) < n_nodos:
-                    ultimo_nodo = rutas[ruta_actual][-1]
-                    mejor_distancia = float("inf")
-                    mejor_nodo = None
-                    for k in range(n_nodos):
-                        if k not in visitados:
-                            distancia = calcular_distancia(nodos[ultimo_nodo], nodos[k])
-                            if nodos[k][2] > capacidad_actual:
-                                continue
-                            if distancia < mejor_distancia:
-                                mejor_distancia = distancia
-                                mejor_nodo = k
-                    if mejor_nodo is not None:
-                        rutas[ruta_actual].append(mejor_nodo)
-                        visitados.add(mejor_nodo)
-                        distancia_actual += mejor_distancia
-                        capacidad_actual -= nodos[mejor_nodo][2]
-                    else:
-                        ruta_actual += 1
-                        capacidad_actual = capacidad_vehiculos
-                        rutas[ruta_actual].append(i)
-                if distancia_actual < distancia_minima:
-                    distancia_minima = distancia_actual
-                    mejor_ruta = rutas
-    return mejor_ruta, distancia_minima
+            i = 0
+            chargedNode = 0
+            chargedRoute = 0
+            for route in neighbor:
+                for node in route:
+                    if(i == idx):
+                        chargedNode = node
+                    i += 1
+                if(chargedNode):
+                    route.remove(chargedNode)
+                    break
+                chargedRoute += 1
 
-# Ejemplo de uso
-#coordenadaX,coordenadaY,demanda
-nodos = np.array([[0, 0, 0], [3, 0, 1], [6, 0, 2], [0, 4, 3], [3, 4, 4], [6, 4, 5]])
-capacidad_vehiculos = 5
-n_vehiculos = 3
-mejor_ruta, distancia_minima = encontrar_camino_optimo(nodos, capacidad_vehiculos, n_vehiculos)
-print("La distancia mínima es:", distancia_minima)
-print("Las rutas óptimas son:")
-for ruta in mejor_ruta:
-    print(ruta)
+            idxRoute = random.randint(0,(len(neighbor)-1))
+            idxNode = random.randint(0, len(neighbor[idxRoute]))
+            neighbor[idxRoute].insert(idxNode, chargedNode)
+
+            demands = []
+            for route in neighbor:
+                demands.append(self.getDemand(route))
+
+            isUnderDemand = True
+            for demand in demands:
+                if(demand > self.capacity):
+                    isUnderDemand = False
+            
+            if(isUnderDemand):
+                return neighbor
+
+```
+Función objetivo:
+
+```python
+def CVRP_function(routes):
+    distance = 0
+    for i in np.arange(len(routes)-1):
+        distance += np.sqrt((routes[i][0] - routes[i+1][0])**2 + (routes[i][1] - routes[i+1][1])**2)
+    return distance
+
+def getAllDistances(data, routes):
+    allDistances = 0
+    for route in routes:
+        coordenates = []
+        coordenates.append(data[0][1])
+        for node in route:
+            coordenates.append(data[node][1])
+        coordenates.append(data[0][1])
+        allDistances += CVRP_function(coordenates)
+    return allDistances
 ```
