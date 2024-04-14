@@ -6,9 +6,9 @@ El Problema de Ruta de Vehículo con Restricción de Capacidad es un clásico en
 
 Pertenece a la categoría de problemas NP-hard, lo que significa que no se conoce un algoritmo eficiente que pueda resolver instancias de tamaño arbitrario en tiempo polinómico. Por lo tanto, se utilizan enfoques heurísticos y metaheurísticos para encontrar soluciones aproximadas en un tiempo razonable.
 
-#### Descripción del Problema
+### Descripción del Problema
 
-Supongamos que la agencia "Envíos Rápidos" tiene un almacén central desde el cual distribuye paquetes a diferentes clientes en una ciudad. La empresa cuenta con una flota de vehículos con capacidad limitada para realizar las entregas. La agencia tiene que entregar paquetes a 10 clientes en la ciudad, donde cada uno tiene una demanda específica de paquetes que debe ser entregada.
+Supongamos que la agencia "Envíos Rápidos" tiene un almacén central desde el cual distribuye paquetes a diferentes clientes en una ciudad. La empresa cuenta con una flota de vehículos con capacidad limitada para realizar las entregas. La agencia tiene que entregar paquetes a cierto numero de clientes en la ciudad, donde cada uno tiene una demanda específica de paquetes que debe ser entregada.
 
 En este caso, el CVRP se aplicaría de la siguiente manera:
 
@@ -34,11 +34,17 @@ Dado este contexto, podemos entender que el **CVRP** busca determinar la mejor m
 Para la implementacion del CVRP debemos tener en consideración algunos elementos, como los listados a continuación:
 
 **1. Nodos:** Representan los puntos de entrega de mercancías (casas/clientes), incluyendo el almacén central. Estos nodos estan numerados desde 0, 1, 2, 3, ... hasta el numero de nodos indicados. Estan incluidos en las siguientes matrices:
+
   **1.1 Matriz de Coordenadas:** Cada renglón posee el número del nodo, seguido de sus coordenadas en X,Y. Por ejemplo: (2, 12, 10), indicando que la casa/cliente No.2 esta ubicada en las coordenadas (12,10) del vecindario.
+  
   **1.2 Matriz de Demandas:** Cada renglon contiene el numero del nodo, seguido de respectiva demanda. Por ejemplo: (8, 2), indicando que la casa/cliente No.8 requiere de 2 paquetes a entregar.
+  
 **2. Capacidad:** Los vehículos tienen la **misma** capacidad máxima de carga.
+
 **3. Numero de Vehiculos.**
+
 **4. Nodo Origen:** Representa el numero de nodo que se tomara como la bodega/punto de partida. Usualmente, se toma el primer nodo (No.1),
+
 
 ### Formulacion Matemática
 
@@ -58,13 +64,13 @@ $$\text{Minimizar } \sum_{i \in N} \sum_{j \in N, j \neq i} c_{ij} \cdot x_{ij}$
 
 Donde:
 - N = {1,2,…,n}: Conjunto de nodos (Nodo No.1 es el almacen y el resto los clientes).
-- ***c_{ij}***: Costo de viajar desde el nodo ***i*** al ***j***.
-- ***q_{i}***: Demanda del cliente **i***.
+- ***$c_{ij}$***: Costo de viajar desde el nodo ***i*** al ***j***.
+- ***$q_{i}$***: Demanda del cliente **i***.
 - Q : Capacidad de los vehiculos.
 
 **Variables de Decisión:** 
-- ***x_{ij}***: Variable binaria, 1 indica que se viaja directamente del nodo ***i*** al ***j***, 0 caso contrario.
-- ***u_{i}***: Paquetes entregados al nodo ***i***.
+- ***$x_{ij}$***: Variable binaria, 1 indica que se viaja directamente del nodo ***i*** al ***j***, 0 caso contrario.
+- ***$u_{i}$***: Paquetes entregados al nodo ***i***.
 
 #### Aplicaciones
 
