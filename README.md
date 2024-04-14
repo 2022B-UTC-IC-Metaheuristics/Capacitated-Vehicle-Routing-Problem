@@ -1,30 +1,78 @@
-# The Capacited Vehicle Routing Problem
+# CVRP: The Capacited Vehicle Routing Problem
 
-By Christian Hernandez
+### Contexto Historico
 
-#### Descripción del problema.
+El Problema de Ruta de Vehículo con Restricción de Capacidad es un clásico en el campo de la optimización combinatoria, especialmente en logística y transporte. Tiene sus raíces en los estudios de distribución de mercancías y planificación de rutas que datan de la década de 1950, pero se formalizó por primera vez en la literatura académica en la década de 1960.
 
-El Capacitated Vehicle Routing Problem (CVRP) es un problema de optimización combinatoria que se enfoca en encontrar la ruta más eficiente para un conjunto de vehículos que deben cumplir con la entrega de bienes o servicios a un conjunto de clientes, tomando en cuenta las restricciones de capacidad de los vehículos.
+Pertenece a la categoría de problemas NP-hard, lo que significa que no se conoce un algoritmo eficiente que pueda resolver instancias de tamaño arbitrario en tiempo polinómico. Por lo tanto, se utilizan enfoques heurísticos y metaheurísticos para encontrar soluciones aproximadas en un tiempo razonable.
 
-En este problema, se tiene un conjunto de vehículos, cada uno con una capacidad máxima de carga. Además, se cuenta con un conjunto de clientes que deben ser atendidos, cada uno con una demanda específica de bienes o servicios. El objetivo es planificar la ruta que debe seguir cada vehículo para atender a todos los clientes, de manera que se minimice la distancia recorrida por los vehículos y se respeten las restricciones de capacidad de carga de cada uno.
+#### Descripción del Problema
 
-La resolución del problema CVRP es compleja debido a la gran cantidad de posibles combinaciones de rutas que se pueden generar. Además, la capacidad limitada de los vehículos y las restricciones de tiempo pueden hacer que la planificación de rutas sea aún más desafiante. 
+Supongamos que la agencia "Envíos Rápidos" tiene un almacén central desde el cual distribuye paquetes a diferentes clientes en una ciudad. La empresa cuenta con una flota de vehículos con capacidad limitada para realizar las entregas. La agencia tiene que entregar paquetes a 10 clientes en la ciudad, donde cada uno tiene una demanda específica de paquetes que debe ser entregada.
+
+En este caso, el CVRP se aplicaría de la siguiente manera:
+
+**Datos:**
+- Almacén central: Punto de partida y llegada de los vehículos.
+- Clientes: Puntos de entrega de paquetes.
+- Demandas: Cantidad de paquetes que cada cliente necesita.
+- Capacidad de los vehículos: Número máximo de paquetes que pueden transportar.
+  
+**Objetivo:**
+Minimizar la distancia total recorrida por los vehículos.
+
+**Restricciones:**
+- Los vehículos no pueden exceder su capacidad máxima de carga.
+- Cada cliente debe recibir su cantidad específica de paquetes.
+- Cada cliente debe ser visitado exactamente una sola vez.
+- Cada vehículo debe regresar al almacén central al finalizar su ruta.
+  
+Dado este contexto, podemos entender que el **CVRP** busca determinar la mejor manera (encontrar rutas) de distribuir mercancías/paquetes desde un almacén central a una serie de clientes, utilizando una flota de vehículos con capacidad limitada, de tal forma que logre **minimizar la distancia total recorrida de todas las rutas.**
+
+### Elementos
+
+Para la implementacion del CVRP debemos tener en consideración algunos elementos, como los listados a continuación:
+
+**1. Nodos:** Representan los puntos de entrega de mercancías (casas/clientes), incluyendo el almacén central. Estos nodos estan numerados desde 0, 1, 2, 3, ... hasta el numero de nodos indicados. Estan incluidos en las siguientes matrices:
+  **1.1 Matriz de Coordenadas:** Cada renglón posee el número del nodo, seguido de sus coordenadas en X,Y. Por ejemplo: (2, 12, 10), indicando que la casa/cliente No.2 esta ubicada en las coordenadas (12,10) del vecindario.
+  **1.2 Matriz de Demandas:** Cada renglon contiene el numero del nodo, seguido de respectiva demanda. Por ejemplo: (8, 2), indicando que la casa/cliente No.8 requiere de 2 paquetes a entregar.
+**2. Capacidad:** Los vehículos tienen la **misma** capacidad máxima de carga.
+**3. Numero de Vehiculos.**
+**4. Nodo Origen:** Representa el numero de nodo que se tomara como la bodega/punto de partida. Usualmente, se toma el primer nodo (No.1),
+
+### Formulacion Matemática
+
+El modelo matematico de la función del CVRP está definida de la siguiente forma: 
+
+**Función Objetivo:** MINIMIZAR EL COSTO (DISTANCIAS) DE VIAJE DE TODOS LOS VEHÍCULOS
+$$\text{Minimizar } \sum_{i \in N} \sum_{j \in N, j \neq i} c_{ij} \cdot x_{ij}$$
+
+**Restricciones:**
+- Cada cliente debe ser visitado exactamente una vez:
+  $$\sum_{j \in N, j \neq i} x_{ij} = 1, \quad \forall i \in \{2, \ldots, n\}$$
+- Cada vehículo debe salir exactamente una vez del almacén central y regresar al mismo:
+  $$\sum_{i \in N, i \neq 1} x_{i1} = 1$$
+  $$\sum_{j \in N, j \neq 1} x_{1j} = 1$$
+- Capacidad de los vehículos (la misma):
+  $$\sum_{i \in N} q_i \cdot x_{ij} \leq Q, \quad \forall j \in \{2, \ldots, n\}$$
+
+Donde:
+- N = {1,2,…,n}: Conjunto de nodos (Nodo No.1 es el almacen y el resto los clientes).
+- ***c_{ij}***: Costo de viajar desde el nodo ***i*** al ***j***.
+- ***q_{i}***: Demanda del cliente **i***.
+- Q : Capacidad de los vehiculos.
+
+**Variables de Decisión:** 
+- ***x_{ij}***: Variable binaria, 1 indica que se viaja directamente del nodo ***i*** al ***j***, 0 caso contrario.
+- ***u_{i}***: Paquetes entregados al nodo ***i***.
 
 #### Aplicaciones
 
 Este problema es común en logística, donde es necesario planificar rutas de entrega eficientes para minimizar los costos de transporte y asegurar que todos los clientes sean atendidos en el tiempo previsto. Algunos de los ejemplos más claros son:
-* La recolección de residuos
-* El transporte de pasajeros.
-* La programación de la producción en la industria manufacturera.
-* Entregas de paqueterías.
-
-#### ¿Qué vamos a necesitar para un problema?
-Nosotros tomamos en consideración algunos elementos, como los listados a continuación.
-* Dimension: Número de nodos y depósitos.
-* Capacidad de los vehículos: Es la misma para todos.
-* Número de nodo y coordenas en forma matricial: Cada renglón posee el número del nodo y sus coordenadas X y Y.
-* Demandas de cada destino: Matriz en cuál cada renglón corresponde al número de nodo y su respectiva demanda.
-* Nodo origen: Número de nodo inicial.
+- La recolección de residuos
+- El transporte de pasajeros.
+- Entregas de paqueterías.
+- Servicios de Emergencia.
 
 ### Ejemplo de una instancia:
 NAME : toy.vrp  
@@ -73,21 +121,6 @@ La solución propuesta al problema es dividirlo en segmentos pequeños que cada 
 El esquema de la solución queda igual al siguiente:
 
  ![Diagrama del ejemplo](https://developers.google.com/optimization/images/routing/vrpgs_solution.svg)
-
-#### Modelo y restricciones
-El modelo matematico de la función del CVRP está definida de la siguiente forma: 
-
-![Formulación matematica](https://repository.uaeh.edu.mx/scige/boletin/sahagun/n10/multimedia/a2/a2_2.jpg)
-
-Donde
-* ${A:}$ Capacidad de cada vehículo 
-* ${V:}$ Número máximo de vehículos
-* ${F_{ij}:}$ Flujo del producto desde el nodo a  
-* ${Z:}$ Costo total de transportación
-* ${d_{i}:}$ Demanda en el nodo
-* ${c_{ij}:}$ Costo de recorrer la distancia entre el nodo  al nodo
-* ${N:}$ Número de nodos
-
 
 Nuestra propueta para solución inicial:
 
