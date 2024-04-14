@@ -43,7 +43,7 @@ Para la implementacion del CVRP debemos tener en consideración algunos elemento
 
 **3. Numero de Vehiculos.**
 
-**4. Nodo Origen:** Representa el numero de nodo que se tomara como la bodega/punto de partida. Usualmente, se toma el primer nodo (No.1),
+**4. Nodo Origen:** Representa el numero de nodo que se tomara como la bodega/punto de partida. Usualmente, se toma el primer nodo (No.1).
 
 
 ### Formulacion Matemática
@@ -69,8 +69,8 @@ Donde:
 - Q : Capacidad de los vehiculos.
 
 **Variables de Decisión:** 
-- ***$x_{ij}$***: Variable binaria, 1 indica que se viaja directamente del nodo ***i*** al ***j***, 0 caso contrario.
-- ***$u_{i}$***: Paquetes entregados al nodo ***i***.
+- $x_{ij}$: Variable binaria, 1 indica que se viaja directamente del nodo ***i*** al ***j***, 0 caso contrario.
+- $u_{i}$: Paquetes entregados al nodo ***i***.
 
 #### Aplicaciones
 
