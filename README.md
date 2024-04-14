@@ -1,29 +1,29 @@
-# CVRP: The Capacited Vehicle Routing Problem
-
+# CVRP: The Capacited Vehicle Routing Problem 
+:car:
 ---
-### Contexto Historico
+### Contexto Historico :book:
 
 El **Problema de Ruta de Vehículo con Restricción de Capacidad** es un clásico en el campo de la optimización combinatoria, especialmente en logística y transporte. Tiene sus raíces en los estudios de distribución de mercancías y planificación de rutas que datan de la década de 1950, pero se formalizó por primera vez en la literatura académica en la década de 1960.
 
 Pertenece a la categoría de problemas NP-hard, lo que significa que no se conoce un algoritmo eficiente que pueda resolver instancias de tamaño arbitrario en tiempo polinómico. Por lo tanto, se utilizan enfoques heurísticos y metaheurísticos para encontrar soluciones aproximadas en un tiempo razonable.
 
 ---
-### Descripción del Problema
+### Descripción del Problema :bulb:
 
 Supongamos que la agencia "Envíos Rápidos" tiene un almacén central desde el cual distribuye paquetes a diferentes clientes en una ciudad. La empresa cuenta con una flota de vehículos con capacidad limitada para realizar las entregas. La agencia tiene que entregar paquetes a cierto numero de clientes en la ciudad, donde cada uno tiene una demanda específica de paquetes que debe ser entregada.
 
 En este caso, el CVRP se aplicaría de la siguiente manera:
 
-**Datos:**
+**Datos:** :bar_chart:
 - Almacén central: Punto de partida y llegada de los vehículos.
 - Clientes: Puntos de entrega de paquetes.
 - Demandas: Cantidad de paquetes que cada cliente necesita.
 - Capacidad de los vehículos: Número máximo de paquetes que pueden transportar.
   
-**Objetivo:**
+**Objetivo:**  :dart:
 Minimizar la distancia total recorrida por los vehículos.
 
-**Restricciones:**
+**Restricciones:** :no_entry_sign:
 - Los vehículos no pueden exceder su capacidad máxima de carga.
 - Cada cliente debe recibir su cantidad específica de paquetes.
 - Cada cliente debe ser visitado exactamente una sola vez.
@@ -32,7 +32,7 @@ Minimizar la distancia total recorrida por los vehículos.
 Dado este contexto, podemos entender que el **CVRP** busca determinar la mejor manera (encontrar rutas) de distribuir mercancías/paquetes desde un almacén central a una serie de clientes, utilizando una flota de vehículos con capacidad limitada, de tal forma que logre **minimizar la distancia total recorrida de todas las rutas.**
 
 ---
-### Elementos
+### Elementos :hammer_and_wrench:
 
 Para la implementacion del CVRP debemos tener en consideración algunos elementos, como los listados a continuación:
 
@@ -49,7 +49,7 @@ Para la implementacion del CVRP debemos tener en consideración algunos elemento
 **6. Nodo Origen:** Representa el numero de nodo que se tomara como la bodega/punto de partida. Usualmente, se toma el primer nodo (No.1).
 
 ---
-### Formulacion Matemática
+### Formulacion Matemática :1234:
 
 El modelo matematico de la función del CVRP está definida de la siguiente forma: 
 
@@ -76,7 +76,7 @@ Donde:
 - $u_{i}$: Paquetes entregados al nodo ***i***.
 
 ---
-### Aplicaciones
+### Aplicaciones :computer:
 
 Este problema es común en logística, donde es necesario planificar rutas de entrega eficientes para minimizar los costos de transporte y asegurar que todos los clientes sean atendidos en el tiempo previsto. Algunos de los ejemplos más claros son:
 - La recolección de residuos
