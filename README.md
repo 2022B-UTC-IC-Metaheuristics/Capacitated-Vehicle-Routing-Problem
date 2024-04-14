@@ -64,8 +64,8 @@ $$\text{Minimizar } \sum_{i \in N} \sum_{j \in N, j \neq i} c_{ij} \cdot x_{ij}$
 
 Donde:
 - N = {1,2,…,n}: Conjunto de nodos (Nodo No.1 es el almacen y el resto los clientes).
-- ***$c_{ij}$***: Costo de viajar desde el nodo ***i*** al ***j***.
-- ***$q_{i}$***: Demanda del cliente **i***.
+- $c_{ij}$: Costo de viajar desde el nodo \(i\) al \(j\).
+- $q_{i}$: Demanda del cliente \(i\).
 - Q : Capacidad de los vehiculos.
 
 **Variables de Decisión:** 
