@@ -89,12 +89,13 @@ Este problema es común en logística, donde es necesario planificar rutas de en
 
 Supongamos que tenemos los siguientes datos:
 
-N = 6 (Cantidad de nodos: 16 clientes y 1 bodega).
-Cantidad de vehiculos = 2 (con este dato, sabemos que seran 4 rutas a encontrar).
+N = 6 (Cantidad de nodos: 5 clientes y 1 bodega).
+Cantidad de vehiculos = 2 (con este dato, sabemos que seran 2 rutas a encontrar).
 Capacidad = 10 (la misma para todos los vehiculos).
 Nodo Origen = 1 (el primer nodo sera la bodega).
 
 Matriz de Coordenadas:
+
 
 ```
 1 3 3  
@@ -106,6 +107,7 @@ Matriz de Coordenadas:
 ```
 Matriz de Demandas:
 
+
 ```
 1 0  
 2 5  
@@ -114,6 +116,7 @@ Matriz de Demandas:
 5 1  
 6 7  
 ```
+
 Con estos datos, podemos ejemplificar con el siguiente grafo:
  ![Diagrama del ejemplo](https://github.com/Chuchito-Boy/images/blob/main/imagen1.png)
 
@@ -189,27 +192,35 @@ Una vez abordado los conceptos y ejemplos necesarios, resumiremos los pasos a se
 
 A continuacion se mostrara la estructura de una instancia en particular; indicando los elementos escenciales para su posterior implementacion:
 
+
 NAME : toy.vrp  
 COMMENT : toy instance>  
 TYPE : CVRP  
 **DIMENSION : 6**  
 EDGE_WEIGHT_TYPE : EUC_2D  
+
 **CAPACITY : 30** 
+
 **NODE_COORD_SECTION**  
+
 1 38 46  
 2 59 46  
 3 96 42  
 4 47 61  
 5 26 15  
 6 66 6  
+
 **DEMAND_SECTION** 
+
 1 0  
 2 16  
 3 18  
 4 1  
 5 13  
 6 8  
-**DEPOT_SECTION**  
+
+**DEPOT_SECTION** 
+
 1  
 -1  
 EOF  
