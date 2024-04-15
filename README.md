@@ -166,24 +166,24 @@ Para generar una solucion vecina, basta con selecionar de forma aleatoria 2 nodo
 
 Una vez abordado los conceptos y ejemplos necesarios, resumiremos los pasos a seguir para la resolucion de un problema CVRP:
 
-1. Definicion de Elementos: 
-   1.1 Nodos (N)
-   1.2 Matriz de Coordenadas
-   1.3 Matriz de Demandas
-   1.4 Capacidad
-   1.5 Numero de Vehiculos
-   1.6 Nodo Origen
-2. Obtener solucion inicial
-   2.1 Quitar nodo origen de N
-   2.2 Revolver elementos de N
-   2.3 Repartir elementos de N a cada ruta
-3. Obtener solucion vecina
-   3.1 Seleccionar 2 elementos de N
-   3.2 Intercambiarlos
-   3.2 Repartir elementos de N a cada ruta
-4. Obtener costo global
-   4.1 Otener costo de cada ruta
-   4.2 Sumarlas para obtener el **costo global** 
+1. Definición de Elementos:
+   - 1.1 Nodos (N).
+   - 1.2 Matriz de Coordenadas.
+   - 1.3 Matriz de Demandas.
+   - 1.4 Capacidad.
+   - 1.5 Número de Vehículos.
+   - 1.6 Nodo Origen.
+2. Obtener solución inicial:
+   - 2.1 Quitar nodo origen de N.
+   - 2.2 Revolver elementos de N.
+   - 2.3 Repartir elementos de N a cada ruta.
+3. Obtener solución vecina:
+   - 3.1 Seleccionar 2 elementos de N.
+   - 3.2 Intercambiarlos.
+   - 3.3 Repartir elementos de N a cada ruta.
+4. Obtener costo global:
+   - 4.1 Obtener costo de cada ruta.
+   - 4.2 Sumarlas para obtener el **costo global** a minimizar.
 
 ### Ejemplo de una instancia:
 NAME : toy.vrp  
@@ -210,28 +210,6 @@ DEPOT_SECTION
 1  
 -1  
 EOF  
-
-#### ¿Cómo se representa una solución? 
-Se representa por un arreglo de sub arreglos, en el que cada subarreglo nos dice el camino que tomará el camión en esa posición. En caso de que el camión no sea utilizado, no se mostrará nada.
-Ejemplo: 
-[[0,7,1,4,3,0],[0,8,6,2,5,0],[0,12,11,15,13,0],[0,9,10,16,14,0]]
-
-
- ![Diagrama del ejemplo](https://i.postimg.cc/v8XP8ggT/png.gif)
-
-#### Ejemplo
-Se tienen las siguientes ubicaciones, numeradas del 0 al 16, donde la ubicación 0 es la salida. En la parte inferior derecha de cada una se tiene la cantidad que se va a recoger.
- ![Diagrama del ejemplo](https://developers.google.com/optimization/images/routing/cvrp.svg)
-
- Para este problema se van a tener un total de 4 vehiculos con una carga máxima de 15 unidades cada uno.
-
-*El problema es encontrar una asignación de rutas que sean las más cortas en distancia y que el total de carga de un vehículo nunca sobrepase su capacidad de carga.*
-
-#### Solución
-La solución propuesta al problema es dividirlo en segmentos pequeños que cada uno de los vehiculos va a recorrer. Cada vehiculo ahora se convierte en un problema del agente viajero y se visitan las ciudades en base al menor costo de transporte de productos.
-El esquema de la solución queda igual al siguiente:
-
- ![Diagrama del ejemplo](https://developers.google.com/optimization/images/routing/vrpgs_solution.svg)
 
 Nuestra propueta para solución inicial:
 
