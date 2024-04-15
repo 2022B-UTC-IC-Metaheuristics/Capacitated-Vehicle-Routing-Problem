@@ -185,47 +185,150 @@ Una vez abordado los conceptos y ejemplos necesarios, resumiremos los pasos a se
    - 4.1 Obtener costo de cada ruta.
    - 4.2 Sumarlas para obtener el **costo global** a minimizar.
 
-### Ejemplo de una instancia:
+### Ejemplo de Instancias:
+
+A continuacion se mostrara la estructura de una instancia en particular; indicando los elementos escenciales para su posterior implementacion:
+
 NAME : toy.vrp  
 COMMENT : toy instance>  
 TYPE : CVRP  
-DIMENSION : 6  
+**DIMENSION : 6**  
 EDGE_WEIGHT_TYPE : EUC_2D  
-CAPACITY : 30  
-NODE_COORD_SECTION  
+**CAPACITY : 30** 
+**NODE_COORD_SECTION**  
 1 38 46  
 2 59 46  
 3 96 42  
 4 47 61  
 5 26 15  
 6 66 6  
-DEMAND_SECTION  
+**DEMAND_SECTION** 
 1 0  
 2 16  
 3 18  
 4 1  
 5 13  
 6 8  
-DEPOT_SECTION  
+**DEPOT_SECTION**  
 1  
 -1  
 EOF  
 
-Nuestra propueta para solución inicial:
+
+### Implementacion Python
+
+Lectura de instancias:
 
 ```python
-def getTotalDemand(data):
-    totalDemand = 0
-    for element in data:
-        totalDemand += element[2]
-    return totalDemand
+import numpy as np
+import random
+import copy
+import math
+# Funciones de lectura de instancias
+def getData(lenData):
+    data = []
+    for i in np.arange(lenData):
+        data.append([])
+        data[i].append(-1)
+        data[i].append([-1,-1])
+        data[i].append(-1)
+    return data
 
-def getDemand(data, route):
-    demand = 0
-    for node in route:
-        demand += data[node][2]
-    return demand
+def convertListCharToString(listChar):
+    new = ""
+    for x in listChar:
+        new += x
+    return new
 
+def read_instance(filename):
+    with open(filename) as f:
+        file = f.readlines()
+
+    string = convertListCharToString(file)
+    dimension = extract_dimension(string)
+    data = getData(dimension)
+    read_coordinates(string, data)
+    read_demands(string, data)
+    capacity = extract_capacity(string)
+    return data, capacity
+
+def extract_capacity(string):
+    stringCapacity = "CAPACITY : "
+    capacityIndex  = string.find(stringCapacity) + len(stringCapacity)
+    capacity = ""
+    while(string[capacityIndex] != '\n'):
+        capacity += string[capacityIndex]
+        capacityIndex += 1
+    return int(capacity)
+
+
+def extract_dimension(string):
+    stringDimensions = "DIMENSION : "
+    dimensionsIndex  = string.find(stringDimensions) + len(stringDimensions)
+    dimension = ""
+    while(string[dimensionsIndex] != '\n'):
+        dimension += string[dimensionsIndex]
+        dimensionsIndex += 1
+    return int(dimension)
+
+def read_coordinates(string, data):
+    stringCord = "NODE_COORD_SECTION" 
+    initialIndex = string.find(stringCord) + len(stringCord) + 2
+
+    indicator = 0
+    i = 0
+    while(string[initialIndex] != 'D'):
+        number = ""
+        while(ord(string[initialIndex]) != 32 and string[initialIndex] != '\n'):
+            number += string[initialIndex]
+            initialIndex += 1
+        
+        if(len(number) > 0):        
+            if indicator == 0:
+                data[i][0] = (int(number) - 1)
+                indicator += 1
+            elif indicator == 1:
+                data[i][1][0] = int(number)
+                indicator += 1      
+            elif indicator == 2:
+                data[i][1][1] = int(number)
+                indicator = 0
+                i += 1
+
+        initialIndex +=1
+
+def read_demands(string, data):
+    stringCost = "DEMAND_SECTION"
+    initialIndex = string.find(stringCost) + len(stringCost) + 2
+
+    indicator = 0
+
+    i = 0
+    while(string[initialIndex] != 'D'):
+        number = ""
+        while(ord(string[initialIndex]) != 32 and string[initialIndex] != '\n'):
+            number += string[initialIndex]
+            initialIndex += 1
+        if(len(number) > 0):        
+            if indicator == 0:
+                indicator += 1
+            elif indicator == 1:
+                data[i][2] = int(number)
+                indicator = 0     
+                i += 1
+        initialIndex +=1
+```
+
+Suponiendo que se desea leer la instancia3.txt, la carga de datos es la siguiente:
+
+`Datos:  [[0, [27, 93], 0], [1, [33, 27], 16], [2, [29, 39], 2], [3, [7, 81], 7], [4, [1, 59], 11], [5, [49, 9], 9], [6, [21, 53], 17], [7, [79, 89], 21], [8, [81, 83], 23], [9, [85, 11], 10], [10, [45, 9], 6], [11, [7, 65], 19], [12, [95, 27], 18], [13, [81, 85], 20], [14, [37, 81], 13], [15, [69, 69], 5], [16, [15, 95], 11], [17, [89, 75], 24], [18, [33, 93], 2], [19, [57, 83], 3], [20, [11, 95], 1], [21, [3, 57], 5], [22, [45, 11], 20], [23, [43, 61], 23], [24, [35, 43], 24], [25, [19, 83], 18], [26, [83, 69], 19], [27, [85, 77], 2], [28, [19, 39], 17], [29, [83, 87], 17], [30, [1, 13], 9], [31, [15, 39], 11], [32, [83, 17], 2], [33, [41, 97], 6], [34, [31, 61], 9], [35, [59, 69], 5], [36, [29, 15], 9], [37, [93, 83], 2], [38, [63, 97], 14], [39, [65, 57], 19], [40, [15, 69], 11], [41, [31, 97], 21], [42, [57, 9], 20], [43, [85, 37], 21], [44, [21, 29], 18], [45, [53, 11], 48], [46, [15, 77], 1], [47, [41, 69], 17], [48, [45, 17], 42], [49, [13, 25], 2], [50, [63, 57], 4], [51, [95, 5], 24], [52, [55, 91], 18], [53, [3, 31], 21], [54, [47, 7], 11], [55, [61, 69], 9], [56, [85, 35], 18], [57, [89, 81], 22], [58, [45, 47], 9], [59, [65, 93], 23]] `
+
+
+
+#### Creacion de solucion inicial
+
+```python
+# Funciones principales
 def create_first_solution(data, capacity):
     totalDemand = getTotalDemand(data)
     totalCars = math.ceil(totalDemand / capacity)
@@ -255,106 +358,18 @@ def create_first_solution(data, capacity):
             break
 
     return routes
+
 ```
 
-En esta función se están utilizando variables globales como son el lugar de origen, las distancias, las demandas de los lugares y las capacidades del vehículo. Cada vez que un vehiculo excede su capacidad, se penaliza la solución para que no sea la óptima.
+La salida es la siguiente:
 
-#### Instancias a ejecutar. 
-Se encuentran en el documento adjunto.
+`Initial solution:  [[31, 58, 3, 40, 59, 13, 5], [26, 22, 10, 57, 38, 2], [1, 39, 47, 12, 27, 23], [6, 7, 54, 46, 45], [29, 35, 8, 49, 48], [51, 50, 21, 56, 43, 20, 25], [28, 32, 33, 16, 55, 36, 44, 30, 34], [52, 14, 24, 42, 11, 37], [19, 41, 4, 15, 9, 17, 53, 18]]`
 
-### Lectura de instancias
-Se proporciona el código en python para la lectura correcta de los archivos y almacenar los datos. Esto en una matriz en la cual cada renglón sigue el siguiente formato: [Nodo,CoordX,CoordY,Demanda]
-```python
-def getData(lenData):
-    data = []
-    for i in np.arange(lenData):
-        data.append([])
-        data[i].append(-1)
-        data[i].append([-1,-1])
-        data[i].append(-1)
-    
-    return data
-    
-def convertListCharToString(listChar):
-    new = ""
-    for x in listChar:
-        new += x
-    return new
-     
-
-with open('./A-n33-k5.txt') as f:
-    file = f.readlines()
-
-string = convertListCharToString(file)
-
-stringDimensions = "DIMENSION : "
-dimensionsIndex  = string.find(stringDimensions) + len(stringDimensions)
-dimension = ""
-
-while(string[dimensionsIndex] != '\n'):
-    dimension += string[dimensionsIndex]
-    dimensionsIndex += 1
-
-dimension = int(dimension)
-
-data = getData(dimension)
-
-stringCord = "NODE_COORD_SECTION" 
-
-initialIndex = string.find(stringCord) + len(stringCord) + 2
-
-indicator = 0
-
-i = 0
-while(string[initialIndex] != 'D'):
-    number = ""
-    while(ord(string[initialIndex]) != 32 and string[initialIndex] != '\n'):
-        number += string[initialIndex]
-        initialIndex += 1
-    
-    if(len(number) > 0):        
-        if indicator == 0:
-            data[i][0] = (int(number) - 1)
-            indicator += 1
-        elif indicator == 1:
-            data[i][1][0] = int(number)
-            indicator += 1      
-        elif indicator == 2:
-            data[i][1][1] = int(number)
-            indicator = 0
-            i += 1
-
-    initialIndex +=1
-
-stringCost = "DEMAND_SECTION"
-initialIndex = string.find(stringCost) + len(stringCost) + 2
-
-indicator = 0
-
-i = 0
-while(string[initialIndex] != 'D'):
-    number = ""
-    while(ord(string[initialIndex]) != 32 and string[initialIndex] != '\n'):
-        number += string[initialIndex]
-        initialIndex += 1
-    #print(number)
-    if(len(number) > 0):        
-        if indicator == 0:
-            indicator += 1
-        elif indicator == 1:
-            data[i][2] = int(number)
-            indicator = 0     
-            i += 1
-
-    initialIndex +=1
-print(data)
-```
-
-#### Funcion de crear vecinos
+#### Creacion de solucion vecina
 
 ```python
 def create_neighbor_solution(data, actual_solution, capacity):
-    while(1):
+    while True:
         neighbor = copy.deepcopy(actual_solution)
         idx = random.randint(0, (len(data) - 2))
 
@@ -362,10 +377,10 @@ def create_neighbor_solution(data, actual_solution, capacity):
         chargedNode = 0
         for route in neighbor:
             for node in route:
-                if(i == idx):
+                if i == idx:
                     chargedNode = node
                 i += 1
-            if(chargedNode):
+            if chargedNode:
                 route.remove(chargedNode)
                 break
 
@@ -373,72 +388,49 @@ def create_neighbor_solution(data, actual_solution, capacity):
         idxNode = random.randint(0, len(neighbor[idxRoute]))
         neighbor[idxRoute].insert(idxNode, chargedNode)
 
-        demands = []
-        for route in neighbor:
-            demands.append(getDemand(data, route))
+        return neighbor
+```
 
-        isUnderDemand = True
-        for demand in demands:
-            if(demand > capacity):
-                isUnderDemand = False
-        
-        if(isUnderDemand):
-            return neighbor
+La salida es la siguiente:
+
+`Datos: Neighbor solution:  [[31, 58, 3, 40, 59, 13, 5], [26, 22, 10, 57, 38, 2], [1, 39, 47, 12, 27, 23], [6, 7, 54, 46, 19, 45], [29, 35, 8, 49, 48], [51, 50, 21, 56, 43, 20, 25], [28, 32, 33, 16, 55, 36, 44, 30, 34], [52, 14, 24, 42, 11, 37], [41, 4, 15, 9, 17, 53, 18]]`
+
+
+#### Funcion objetivo
+
+```python
+def CVRP_function(routes, data, capacity):
+    distance = 0
+    penalty = 0
+    for i in np.arange(len(routes)):
+        route_demand = getDemand(data, routes[i])
+        excess_demand = max(route_demand - capacity, 0)
+        penalty += excess_demand * capacity
+        for j in np.arange(len(routes[i]) - 1):
+            node1 = data[routes[i][j]][1]
+            node2 = data[routes[i][j+1]][1]
+            distance += euclidean_distance(node1, node2)
+    return distance + penalty
 
 ```
-Función objetivo:
+
+#### Funciones auxiliares
 
 ```python
 def euclidean_distance(point1, point2):
     return np.sqrt((point1[0] - point2[0])**2 + (point1[1] - point2[1])**2)
 
-def CVRP_function(routes, data):
-    distance = 0
-    for i in np.arange(len(routes)):
-        for j in np.arange(len(routes[i]) - 1):
-            node1 = data[routes[i][j]][1]
-            node2 = data[routes[i][j+1]][1]
-            distance += euclidean_distance(node1, node2)
-    return distance
-```
-Ejemplo practico para datos estaticos:
+def getTotalDemand(data):
+    totalDemand = 0
+    for element in data:
+        totalDemand += element[2]
+    return totalDemand
 
-```python
-# Datos de ejemplo
-data = [
-    [0, (38, 46), 0],
-    [1, (59, 46), 16],
-    [2, (96, 42), 18],
-    [3, (47, 61), 1],
-    [4, (26, 15), 13],
-    [5, (66, 6), 8],
-    [6, (70, 6), 8]
-]
+def getDemand(data, route):
+    demand = 0
+    for node in route:
+        demand += data[node][2]
+    return demand
 
-capacity = 30
-
-# Crear solución inicial
-initial_solution = create_first_solution(data, capacity)
-
-# Imprimir la solución inicial
-print("Solución inicial:")
-for i, route in enumerate(initial_solution):
-    print(f"Ruta {i+1}: {route}")
-
-# Crear una solución vecina
-neighbor_solution = create_neighbor_solution(data, initial_solution, capacity)
-
-# Imprimir la solución vecina
-print("\nSolución vecina:")
-for i, route in enumerate(neighbor_solution):
-    print(f"Ruta {i+1}: {route}")
-
-# Calcular la función objetivo de la solución inicial
-initial_distance = CVRP_function(initial_solution, data)
-print(f"\nDistancia de la solución inicial: {initial_distance}")
-
-# Calcular la función objetivo de la solución vecina
-neighbor_distance = CVRP_function(neighbor_solution, data)
-print(f"Distancia de la solución vecina: {neighbor_distance}")
 
 ```
