@@ -95,6 +95,7 @@ Capacidad = 10 (la misma para todos los vehiculos).
 Nodo Origen = 1 (el primer nodo sera la bodega).
 
 Matriz de Coordenadas:
+
 1 3 3  
 2 2 4  
 3 1 3  
@@ -103,6 +104,7 @@ Matriz de Coordenadas:
 6 5 5 
 
 Matriz de Demandas:
+
 1 0  
 2 5  
 3 3  
@@ -119,19 +121,23 @@ CVRP nos dice que tenemos que construir una ruta para cada vehiculo de forma ale
 
 Para ello, seguiremos los siguientes pasos: 
 
-1. Del conjunto 'N = { 1, 2, 3, 4, 5, 6}', el cual contiene todos los nodos enumerados, eliminamos el nodo bodega (nodo 1) quedando asi:
-'N = { 2, 3, 4, 5, 6}'.
+1. Del conjunto ´N = { 1, 2, 3, 4, 5, 6}´, el cual contiene todos los nodos enumerados, eliminamos el nodo bodega (nodo 1) quedando asi:
+
+´N = { 2, 3, 4, 5, 6}´.
 
 2. Posteriormente, revolvemos el arreglo N para comenzar a distribuir en las rutas.
-'N = { 2, 3, 6, 5, 4}'
 
-3. Para la construccion de las rutas, nos apoyaremos de arreglos auxiliares que representaran el recorrido de cada vehiculo (en este caso seran 2). 
-'Ruta 1 = []'
-'Ruta 2 = []'
+´N = { 2, 3, 6, 5, 4}´
+
+3. Para la construccion de las rutas, nos apoyaremos de arreglos auxiliares que representaran el recorrido de cada vehiculo (en este caso seran 2).
+
+´Ruta 1 = []´
+´Ruta 2 = []´
 
 4. Comenzaremos asignando el primer nodo de N a la Ruta 1, el segundo a la Ruta 2 y asi de forma intercalada hasta repartir todos. Quedando las rutas de esta forma:
-'Ruta 1 = [2, 6, 4]'
-'Ruta 2 = [3, 5]'
+
+´Ruta 1 = [2, 6, 4]´
+´Ruta 2 = [3, 5]´
 
 **Nota:** Las rutas comienzan y finalizan en el nodo origen.
 
@@ -139,6 +145,7 @@ Graficamente tenemos la primer propuesta de rutas:
  ![Diagrama del ejemplo con rutas](https://github.com/Chuchito-Boy/images/blob/main/imagen2.png)
 
 5. Como siguiente paso, debemos calcular las distancias recorridas en cada ruta con la formula de la **distancia euclideana**.
+
 Ejemplo: Ruta 1,
 | Nodo inicial | Nodo Destino | Costo |
 |-----------|------|--------|
@@ -151,7 +158,7 @@ Ejemplo: Ruta 1,
 
 ### Generacion de solucion vecina
 
-Para generar una solucion vecina, basta con selecionar de forma aleatoria 2 nodos del conjunto N (el ultimo obtenido) e intercambiarlos. En el caso del ejemplo, tenemos que el ultimo conjunto N obtenido es 'N = { 2, 3, 6, 5, 4}'. Al seleccionar aletoriamente 2 elementos: '2', '6' y realizar el intercambio obtenemos el nuevo conjunto 'N = { 6, 3, 2, 5, 4}'
+Para generar una solucion vecina, basta con selecionar de forma aleatoria 2 nodos del conjunto N (el ultimo obtenido) e intercambiarlos. En el caso del ejemplo, tenemos que el ultimo conjunto N obtenido es ´N = { 2, 3, 6, 5, 4}´. Al seleccionar aletoriamente 2 elementos: ´2´, ´6´ y realizar el intercambio obtenemos el nuevo conjunto ´N = { 6, 3, 2, 5, 4}´
 
 
 ### Ejemplo de una instancia:
