@@ -1,5 +1,4 @@
-# CVRP: The Capacited Vehicle Routing Problem 
-:car:
+# CVRP: The Capacited Vehicle Routing Problem :car:
 ---
 ### Contexto Historico :book:
 
@@ -83,6 +82,35 @@ Este problema es común en logística, donde es necesario planificar rutas de en
 - El transporte de pasajeros.
 - Entregas de paqueterías.
 - Servicios de Emergencia.
+
+### Ejemplificacion
+
+Supongamos que tenemos los siguientes datos:
+
+N = 6 (Cantidad de nodos: 16 clientes y 1 bodega).
+Cantidad de vehiculos = 2 (con este dato, sabemos que seran 4 rutas a encontrar).
+Capacidad = 10 (la misma para todos los vehiculos).
+Nodo Origen = 1 (el primer nodo sera la bodega).
+
+Matriz de Coordenadas:
+1 3 3  
+2 2 4  
+3 1 3  
+4 6 4  
+5 2 2  
+6 5 5 
+
+Matriz de Demandas:
+1 0  
+2 5  
+3 3  
+4 3  
+5 1  
+6 7  
+
+Con estos datos, podemos ejemplificar con el siguiente grafo:
+
+ ![Diagrama del ejemplo](https://github.com/Chuchito-Boy/images/blob/main/imagen1.png)
 
 
 ### Ejemplo de una instancia:
