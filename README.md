@@ -96,22 +96,24 @@ Nodo Origen = 1 (el primer nodo sera la bodega).
 
 Matriz de Coordenadas:
 
+```
 1 3 3  
 2 2 4  
 3 1 3  
 4 6 4  
 5 2 2  
 6 5 5 
-
+```
 Matriz de Demandas:
 
+```
 1 0  
 2 5  
 3 3  
 4 3  
 5 1  
 6 7  
-
+```
 Con estos datos, podemos ejemplificar con el siguiente grafo:
  ![Diagrama del ejemplo](https://github.com/Chuchito-Boy/images/blob/main/imagen1.png)
 
@@ -160,6 +162,28 @@ Ejemplo: Ruta 1,
 
 Para generar una solucion vecina, basta con selecionar de forma aleatoria 2 nodos del conjunto N (el ultimo obtenido) e intercambiarlos. En el caso del ejemplo, tenemos que el ultimo conjunto N obtenido es `N = { 2, 3, 6, 5, 4}`. Al seleccionar aletoriamente 2 elementos: `2`, `6` y realizar el intercambio obtenemos el nuevo conjunto `N = { 6, 3, 2, 5, 4}`
 
+### Metodología
+
+Una vez abordado los conceptos y ejemplos necesarios, resumiremos los pasos a seguir para la resolucion de un problema CVRP:
+
+1. Definicion de Elementos: 
+   1.1 Nodos (N)
+   1.2 Matriz de Coordenadas
+   1.3 Matriz de Demandas
+   1.4 Capacidad
+   1.5 Numero de Vehiculos
+   1.6 Nodo Origen
+2. Obtener solucion inicial
+   2.1 Quitar nodo origen de N
+   2.2 Revolver elementos de N
+   2.3 Repartir elementos de N a cada ruta
+3. Obtener solucion vecina
+   3.1 Seleccionar 2 elementos de N
+   3.2 Intercambiarlos
+   3.2 Repartir elementos de N a cada ruta
+4. Obtener costo global
+   4.1 Otener costo de cada ruta
+   4.2 Sumarlas para obtener el **costo global** 
 
 ### Ejemplo de una instancia:
 NAME : toy.vrp  
