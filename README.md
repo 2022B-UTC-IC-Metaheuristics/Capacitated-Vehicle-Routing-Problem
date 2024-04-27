@@ -200,16 +200,12 @@ Una vez abordado los conceptos y ejemplos necesarios, resumiremos los pasos a se
 A continuación se mostrará la estructura de una instancia en particular; indicando los elementos esenciales para su posterior implementación:
 
 
+```
 TYPE : CVRP
-
 DIMENSION : 16
-
 TRUCKS : 4
-
 CAPACITY : 35
-
 DEPOT_SECTION : 1
-
 NODE_COORD_SECTION
 
  1 30 40
@@ -228,8 +224,8 @@ NODE_COORD_SECTION
  14 58 48
  15 58 27
  16 37 69
- 
-DEMAND_SECTION 
+
+DEMAND_SECTION
 
 1 0
 2 19
@@ -249,7 +245,7 @@ DEMAND_SECTION
 16 11
 
 END
-
+```
 
 ### Implementación Python
 
@@ -340,13 +336,13 @@ print("Datos de los nodos:", data)
 
 La salida es:
 
-
-`Número de vehículos: 4
+```
+Número de vehículos: 4
 Capacidad de los vehículos: 35
 Nodos: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
 Nodo Bodega: 1
-Datos de los nodos: [{'nodo': 1, 'demanda': 0, 'coordenadas': (30, 40)}, {'nodo': 2, 'demanda': 19, 'coordenadas': (37, 52)}, {'nodo': 3, 'demanda': 30, 'coordenadas': (49, 49)}, {'nodo': 4, 'demanda': 16, 'coordenadas': (52, 64)}, {'nodo': 5, 'demanda': 23, 'coordenadas': (31, 62)}, {'nodo': 6, 'demanda': 11, 'coordenadas': (52, 33)}, {'nodo': 7, 'demanda': 31, 'coordenadas': (42, 41)}, {'nodo': 8, 'demanda': 15, 'coordenadas': (52, 41)}, {'nodo': 9, 'demanda': 28, 'coordenadas': (57, 58)}, {'nodo': 10, 'demanda': 8, 'coordenadas': (62, 42)}, {'nodo': 11, 'demanda': 8, 'coordenadas': (42, 57)}, {'nodo': 12, 'demanda': 7, 'coordenadas': (27, 68)}, {'nodo': 13, 'demanda': 14, 'coordenadas': (43, 67)}, {'nodo': 14, 'demanda': 6, 'coordenadas': (58, 48)}, {'nodo': 15, 'demanda': 19, 'coordenadas': (58, 27)}, {'nodo': 16, 'demanda': 11, 'coordenadas': (37, 69)}]`
-
+Datos de los nodos: [{'nodo': 1, 'demanda': 0, 'coordenadas': (30, 40)}, {'nodo': 2, 'demanda': 19, 'coordenadas': (37, 52)}, {'nodo': 3, 'demanda': 30, 'coordenadas': (49, 49)}, {'nodo': 4, 'demanda': 16, 'coordenadas': (52, 64)}, {'nodo': 5, 'demanda': 23, 'coordenadas': (31, 62)}, {'nodo': 6, 'demanda': 11, 'coordenadas': (52, 33)}, {'nodo': 7, 'demanda': 31, 'coordenadas': (42, 41)}, {'nodo': 8, 'demanda': 15, 'coordenadas': (52, 41)}, {'nodo': 9, 'demanda': 28, 'coordenadas': (57, 58)}, {'nodo': 10, 'demanda': 8, 'coordenadas': (62, 42)}, {'nodo': 11, 'demanda': 8, 'coordenadas': (42, 57)}, {'nodo': 12, 'demanda': 7, 'coordenadas': (27, 68)}, {'nodo': 13, 'demanda': 14, 'coordenadas': (43, 67)}, {'nodo': 14, 'demanda': 6, 'coordenadas': (58, 48)}, {'nodo': 15, 'demanda': 19, 'coordenadas': (58, 27)}, {'nodo': 16, 'demanda': 11, 'coordenadas': (37, 69)}]
+```
 
 #### Creacion de solucion inicial
 
@@ -371,16 +367,19 @@ def create_first_solution(nodes):
 
 Ejemplo de invocación:
 
-
-`shuffled_nodes = create_first_solution(nodes)
+```
+shuffled_nodes = create_first_solution(nodes)
 print("Lista original:", nodes)
-print("Lista revuelta:", shuffled_nodes)`
+print("Lista revuelta:", shuffled_nodes)
+```
 
 La salida es:
 
+```
+Lista original: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
 
-`Lista original: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
-Lista revuelta: [4, 14, 6, 7, 5, 16, 11, 12, 8, 2, 3, 10, 9, 13, 15]`
+Lista revuelta: [4, 14, 6, 7, 5, 16, 11, 12, 8, 2, 3, 10, 9, 13, 15]
+```
 
 #### Creacion de solucion vecina
 
@@ -405,16 +404,19 @@ def create_neighbor_solution(nodes):
 ```
 Ejemplo de invocación:
 
-
-`neighbor_solution = create_neighbor_solution(shuffled_nodes)
+```
+neighbor_solution = create_neighbor_solution(shuffled_nodes)
 print("Lista original:", shuffled_nodes)
-print("Lista Vecina:", neighbor_solution)`
+print("Lista Vecina:", neighbor_solution)
+```
 
 La salida es:
 
+```
+Lista original: [6, 8, 3, 5, 16, 15, 10, 11, 14, 13, 12, 2, 4, 9, 7]
 
-`Lista original: [6, 8, 3, 5, 16, 15, 10, 11, 14, 13, 12, 2, 4, 9, 7]
-Lista Vecina: [10, 8, 3, 5, 16, 15, 6, 11, 14, 13, 12, 2, 4, 9, 7]`
+Lista Vecina: [10, 8, 3, 5, 16, 15, 6, 11, 14, 13, 12, 2, 4, 9, 7]
+```
 
 #### Funcion objetivo
 
@@ -503,28 +505,30 @@ def objective_CVRP(nodes, data, trucks, capacity, node_origin):
 Ejemplo de invocacion:
 
 
-`
+```
 #Descomentar en la funcion objeitvo
+
 for i, (route, demand, cost) in enumerate(zip(routes, demands, costs)):
         print(f"Ruta del vehículo {i+1}: {route}, Capacidad: {demand}, Costo: {cost}")
     print("El costo global es: ",sum(costs))
-`
+```
 
-`
+```
 #Desde main
+
 objective_CVRP(neighbor_solution, data, trucks, capacity, depot)
-`
+```
 
 La salida es:
 
 
-`
+```
 Ruta del vehículo 1: [1, 16, 2, 4, 1], Capacidad: 46, Costo: 36.209372712298546
 Ruta del vehículo 2: [1, 15, 8, 5, 1], Capacidad: 57, Costo: 44.93003102156281
 Ruta del vehículo 3: [1, 12, 9, 14, 1], Capacidad: 41, Costo: 41.672652222804686
 Ruta del vehículo 4: [1, 13, 7, 3, 6, 10, 11, 1], Capacidad: 102, Costo: 91.38181411842345
 El costo global es:  214.19387007508948
-`
+```
 
 #### Funciones auxiliares
 
