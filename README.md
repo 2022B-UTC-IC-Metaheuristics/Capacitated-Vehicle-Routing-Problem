@@ -535,3 +535,10 @@ def euclidean_distance(coord1, coord2):
 Como la función objetivo recibe 5 parámetros pero la metaheurística solo pueden mandar 1, que es el vector solución (el parámetro `nodes` en la función), se puede hacer uso de `functools.partial` para crear una función que reciba solo un parámetro y que los otros dos sean fijos. 
 
 Por ejemplo:
+```python
+import functools
+# Se fijan los parametros (excepto 'nodes')
+fn = functools.partial(objective_CVRP, data=data, trucks=trucks, capacity=capacity, node_origin=depot)
+# Ejemplo de llamada en la Metaheuristica
+fn(solution)
+```
