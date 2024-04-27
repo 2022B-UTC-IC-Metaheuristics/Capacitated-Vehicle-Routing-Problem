@@ -135,6 +135,7 @@ Para ello, seguiremos los siguientes pasos:
 3. Para la construcción de las rutas, nos apoyaremos de arreglos auxiliares que representaran el recorrido de cada vehículo (en este caso eran 2).
 
 `Ruta 1 = []`
+
 `Ruta 2 = []`
 
 4. Para saber el número de nodos para cada ruta, basta con realizar la división del total de elementos en N sobre la cantidad de vehículos, obteniendo `k` cantidad de elementos para cada ruta; posteriormente, se asignarán los primeros `k` elementos a la primera ruta, los siguientes `k` elementos a la siguiente y así sucesivamente. Quedando las rutas de esta forma:
@@ -146,6 +147,7 @@ Para ello, seguiremos los siguientes pasos:
 
 
 `Ruta 1 = [1, 2, 6, 4, 1]`
+
 `Ruta 2 = [1, 3, 5, 1]`
 
 
@@ -199,11 +201,17 @@ A continuación se mostrará la estructura de una instancia en particular; indic
 
 
 TYPE : CVRP
+
 DIMENSION : 16
+
 TRUCKS : 4
+
 CAPACITY : 35
+
 DEPOT_SECTION : 1
+
 NODE_COORD_SECTION
+
  1 30 40
  2 37 52
  3 49 49
@@ -220,7 +228,9 @@ NODE_COORD_SECTION
  14 58 48
  15 58 27
  16 37 69
+ 
 DEMAND_SECTION 
+
 1 0
 2 19
 3 30
@@ -237,6 +247,7 @@ DEMAND_SECTION
 14 6
 15 19
 16 11
+
 END
 
 
@@ -245,7 +256,9 @@ END
 Lectura de instancias:
 
 ```python
-Parameters
+def read_data(file_path):
+    """
+    Parameters
     ----------
     file_path : text
         Path de la instancia.
@@ -263,8 +276,6 @@ Parameters
     data : list [dict]
         Lista de diccionarios con informacion de cada nodo: número, demanda y coordenadas.
     """
-
-def read_data(file_path):
     trucks = None
     capacity = None
     nodes = []
@@ -315,6 +326,8 @@ def read_data(file_path):
 Suponiendo que se desea leer la instancia1.txt, la carga de datos es la siguiente:
 
 Ejemplo de invocación:
+
+
 ```python
 file_path = '.../instancia1.txt'
 trucks, capacity, nodes, depot, data = read_data(file_path)
@@ -326,6 +339,7 @@ print("Datos de los nodos:", data)
 ```
 
 La salida es:
+
 
 `Número de vehículos: 4
 Capacidad de los vehículos: 35
@@ -356,11 +370,14 @@ def create_first_solution(nodes):
 ```
 
 Ejemplo de invocación:
+
+
 `shuffled_nodes = create_first_solution(nodes)
 print("Lista original:", nodes)
 print("Lista revuelta:", shuffled_nodes)`
 
 La salida es:
+
 
 `Lista original: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
 Lista revuelta: [4, 14, 6, 7, 5, 16, 11, 12, 8, 2, 3, 10, 9, 13, 15]`
@@ -387,11 +404,14 @@ def create_neighbor_solution(nodes):
     return neighbor_nodes
 ```
 Ejemplo de invocación:
+
+
 `neighbor_solution = create_neighbor_solution(shuffled_nodes)
 print("Lista original:", shuffled_nodes)
 print("Lista Vecina:", neighbor_solution)`
 
 La salida es:
+
 
 `Lista original: [6, 8, 3, 5, 16, 15, 10, 11, 14, 13, 12, 2, 4, 9, 7]
 Lista Vecina: [10, 8, 3, 5, 16, 15, 6, 11, 14, 13, 12, 2, 4, 9, 7]`
@@ -479,7 +499,10 @@ def objective_CVRP(nodes, data, trucks, capacity, node_origin):
     # print(sum(costs))
     return sum(costs)
 ```
+
 Ejemplo de invocacion:
+
+
 `
 #Descomentar en la funcion objeitvo
 for i, (route, demand, cost) in enumerate(zip(routes, demands, costs)):
@@ -487,13 +510,14 @@ for i, (route, demand, cost) in enumerate(zip(routes, demands, costs)):
     print("El costo global es: ",sum(costs))
 `
 
-
 `
 #Desde main
 objective_CVRP(neighbor_solution, data, trucks, capacity, depot)
 `
 
 La salida es:
+
+
 `
 Ruta del vehículo 1: [1, 16, 2, 4, 1], Capacidad: 46, Costo: 36.209372712298546
 Ruta del vehículo 2: [1, 15, 8, 5, 1], Capacidad: 57, Costo: 44.93003102156281
