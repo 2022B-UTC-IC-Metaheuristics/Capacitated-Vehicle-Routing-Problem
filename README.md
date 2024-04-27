@@ -331,7 +331,7 @@ print("Datos de los nodos:", data)
 
 La salida es:
 
-```python
+```
 Número de vehículos: 4
 Capacidad de los vehículos: 35
 Nodos: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
@@ -370,7 +370,7 @@ print("Lista revuelta:", shuffled_nodes)
 
 La salida es:
 
-```python
+```
 Lista original: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
 Lista revuelta: [4, 14, 6, 7, 5, 16, 11, 12, 8, 2, 3, 10, 9, 13, 15]
 ```
@@ -406,7 +406,7 @@ print("Lista Vecina:", neighbor_solution)
 
 La salida es:
 
-```python
+```
 Lista original: [6, 8, 3, 5, 16, 15, 10, 11, 14, 13, 12, 2, 4, 9, 7]
 Lista Vecina: [10, 8, 3, 5, 16, 15, 6, 11, 14, 13, 12, 2, 4, 9, 7]
 ```
@@ -512,7 +512,7 @@ objective_CVRP(neighbor_solution, data, trucks, capacity, depot)
 
 La salida es:
 
-```python
+```
 Ruta del vehículo 1: [1, 16, 2, 4, 1], Capacidad: 46, Costo: 36.209372712298546
 Ruta del vehículo 2: [1, 15, 8, 5, 1], Capacidad: 57, Costo: 44.93003102156281
 Ruta del vehículo 3: [1, 12, 9, 14, 1], Capacidad: 41, Costo: 41.672652222804686
@@ -530,4 +530,8 @@ def euclidean_distance(coord1, coord2):
     return math.sqrt((coord1[0] - coord2[0])**2 + (coord1[1] - coord2[1])**2)
 ```
 
-### TIP: ...
+### TIP: 
+
+Como la función objetivo recibe 5 parámetros pero la metaheurística solo pueden mandar 1, que es el vector solución (el parámetro `nodes` en la función), se puede hacer uso de `functools.partial` para crear una función que reciba solo un parámetro y que los otros dos sean fijos. 
+
+Por ejemplo:
