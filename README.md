@@ -199,7 +199,6 @@ Una vez abordado los conceptos y ejemplos necesarios, resumiremos los pasos a se
 
 A continuación se mostrará la estructura de una instancia en particular; indicando los elementos esenciales para su posterior implementación:
 
-
 ```
 TYPE : CVRP
 DIMENSION : 16
@@ -207,7 +206,6 @@ TRUCKS : 4
 CAPACITY : 35
 DEPOT_SECTION : 1
 NODE_COORD_SECTION
-
  1 30 40
  2 37 52
  3 49 49
@@ -224,9 +222,7 @@ NODE_COORD_SECTION
  14 58 48
  15 58 27
  16 37 69
-
 DEMAND_SECTION
-
 1 0
 2 19
 3 30
@@ -243,7 +239,6 @@ DEMAND_SECTION
 14 6
 15 19
 16 11
-
 END
 ```
 
@@ -336,7 +331,7 @@ print("Datos de los nodos:", data)
 
 La salida es:
 
-```
+```python
 Número de vehículos: 4
 Capacidad de los vehículos: 35
 Nodos: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
@@ -367,7 +362,7 @@ def create_first_solution(nodes):
 
 Ejemplo de invocación:
 
-```
+```python
 shuffled_nodes = create_first_solution(nodes)
 print("Lista original:", nodes)
 print("Lista revuelta:", shuffled_nodes)
@@ -375,9 +370,8 @@ print("Lista revuelta:", shuffled_nodes)
 
 La salida es:
 
-```
+```python
 Lista original: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
-
 Lista revuelta: [4, 14, 6, 7, 5, 16, 11, 12, 8, 2, 3, 10, 9, 13, 15]
 ```
 
@@ -404,7 +398,7 @@ def create_neighbor_solution(nodes):
 ```
 Ejemplo de invocación:
 
-```
+```python
 neighbor_solution = create_neighbor_solution(shuffled_nodes)
 print("Lista original:", shuffled_nodes)
 print("Lista Vecina:", neighbor_solution)
@@ -412,9 +406,8 @@ print("Lista Vecina:", neighbor_solution)
 
 La salida es:
 
-```
+```python
 Lista original: [6, 8, 3, 5, 16, 15, 10, 11, 14, 13, 12, 2, 4, 9, 7]
-
 Lista Vecina: [10, 8, 3, 5, 16, 15, 6, 11, 14, 13, 12, 2, 4, 9, 7]
 ```
 
@@ -505,24 +498,21 @@ def objective_CVRP(nodes, data, trucks, capacity, node_origin):
 Ejemplo de invocacion:
 
 
-```
+```python
 #Descomentar en la funcion objeitvo
-
 for i, (route, demand, cost) in enumerate(zip(routes, demands, costs)):
         print(f"Ruta del vehículo {i+1}: {route}, Capacidad: {demand}, Costo: {cost}")
     print("El costo global es: ",sum(costs))
 ```
 
-```
+```python
 #Desde main
-
 objective_CVRP(neighbor_solution, data, trucks, capacity, depot)
 ```
 
 La salida es:
 
-
-```
+```python
 Ruta del vehículo 1: [1, 16, 2, 4, 1], Capacidad: 46, Costo: 36.209372712298546
 Ruta del vehículo 2: [1, 15, 8, 5, 1], Capacidad: 57, Costo: 44.93003102156281
 Ruta del vehículo 3: [1, 12, 9, 14, 1], Capacidad: 41, Costo: 41.672652222804686
