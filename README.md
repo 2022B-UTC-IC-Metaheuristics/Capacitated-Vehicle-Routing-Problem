@@ -1,6 +1,7 @@
 # CVRP: The Capacited Vehicle Routing Problem :car:
----
-### Contexto Historico :book:
+ ![Diagrama del ejemplo](https://github.com/Chuchito-Boy/images/blob/main/imagen4.avif)
+
+### Contexto Histórico :book:
 
 El **Problema de Ruta de Vehículo con Restricción de Capacidad** es un clásico en el campo de la optimización combinatoria, especialmente en logística y transporte. Tiene sus raíces en los estudios de distribución de mercancías y planificación de rutas que datan de la década de 1950, pero se formalizó por primera vez en la literatura académica en la década de 1960.
 
@@ -9,12 +10,12 @@ Pertenece a la categoría de problemas NP-hard, lo que significa que no se conoc
 ---
 ### Descripción del Problema :bulb:
 
-Supongamos que la agencia "Envíos Rápidos" tiene un almacén central desde el cual distribuye paquetes a diferentes clientes en una ciudad. La empresa cuenta con una flota de vehículos con capacidad limitada para realizar las entregas. La agencia tiene que entregar paquetes a cierto numero de clientes en la ciudad, donde cada uno tiene una demanda específica de paquetes que debe ser entregada.
+Supongamos que la agencia "Envíos Rápidos" tiene un almacén central desde el cual distribuye paquetes. La empresa cuenta con una flota de vehículos con capacidad limitada para realizar las entregas. Dicha agencia tiene que entregar paquetes a cierto número de clientes en la ciudad, donde cada uno tiene una demanda específica que debe ser cubierta.
 
 En este caso, el CVRP se aplicaría de la siguiente manera:
 
 **Datos:** :bar_chart:
-- Almacén central: Punto de partida y llegada de los vehículos.
+- Bodega: Punto de partida y llegada de los vehículos.
 - Clientes: Puntos de entrega de paquetes.
 - Demandas: Cantidad de paquetes que cada cliente necesita.
 - Capacidad de los vehículos: Número máximo de paquetes que pueden transportar.
@@ -24,33 +25,33 @@ Minimizar la distancia total recorrida por los vehículos.
 
 **Restricciones:** :no_entry_sign:
 - Los vehículos no pueden exceder su capacidad máxima de carga.
-- Cada cliente debe recibir su cantidad específica de paquetes.
 - Cada cliente debe ser visitado exactamente una sola vez.
+- Cada cliente debe recibir una cantidad específica de paquetes.
 - Cada vehículo debe regresar al almacén central al finalizar su ruta.
   
-Dado este contexto, podemos entender que el **CVRP** busca determinar la mejor manera (encontrar rutas) de distribuir mercancías/paquetes desde un almacén central a una serie de clientes, utilizando una flota de vehículos con capacidad limitada, de tal forma que logre **minimizar la distancia total recorrida de todas las rutas.**
+Dado este contexto, podemos entender que el **CVRP** busca determinar la mejor manera (encontrar rutas) de distribuir mercancías/paquetes desde un almacén central/bodega a una serie de clientes, utilizando una flota de vehículos con capacidad limitada, de tal forma que logre **minimizar la distancia total recorrida de todas las rutas.**
 
 ---
 ### Elementos :hammer_and_wrench:
 
-Para la implementacion del CVRP debemos tener en consideración algunos elementos, como los listados a continuación:
+Para la implementación del CVRP debemos tener en consideración algunos elementos como los listados a continuación:
 
-**1. Nodos:** Representan los puntos de entrega de mercancías (casas/clientes), incluyendo el almacén central. Estos nodos estan numerados desde 0, 1, 2, 3, ... hasta el numero de nodos indicados. Estan incluidos en las siguientes matrices:
+**1. Nodos:** Representan los puntos de entrega de mercancías (casas/clientes), incluyendo el almacén central/bodega. Estos nodos están numerados desde 1, 2, 3, ... hasta el número de nodos indicados. 
 
 **2. Matriz de Coordenadas:** Cada renglón posee el número del nodo, seguido de sus coordenadas en X,Y. Por ejemplo: (2, 12, 10), indicando que la casa/cliente No.2 esta ubicada en las coordenadas (12,10) del vecindario.
   
-**3. Matriz de Demandas:** Cada renglon contiene el numero del nodo, seguido de respectiva demanda. Por ejemplo: (8, 2), indicando que la casa/cliente No.8 requiere de 2 paquetes a entregar.
+**3. Matriz de Demandas:** Cada renglón contiene el número del nodo, seguido de su respectiva demanda. Por ejemplo: (8, 2), indicando que la casa/cliente No.8 requiere de 2 paquetes a entregar.
   
 **4. Capacidad:** Los vehículos tienen la **misma** capacidad máxima de carga.
 
-**5. Numero de Vehiculos.**
+**5. Número de Vehículos.** Representa la cantidad de vehículos disponibles.
 
-**6. Nodo Origen:** Representa el numero de nodo que se tomara como la bodega/punto de partida. Usualmente, se toma el primer nodo (No.1).
+**6. Nodo Origen:** Representa el número de nodo que se tomara como la bodega, es decir, el punto de partida. Usualmente, se toma el primer nodo (No.1).
 
 ---
-### Formulacion Matemática :1234:
+### Formulación Matemática :1234:
 
-El modelo matematico de la función del CVRP está definida de la siguiente forma: 
+El modelo matemático de la función del CVRP está definida de la siguiente forma: 
 
 **Función Objetivo:** MINIMIZAR EL COSTO (DISTANCIAS) DE VIAJE DE TODOS LOS VEHÍCULOS
 $$\text{Minimizar } \sum_{i \in N} \sum_{j \in N, j \neq i} c_{ij} \cdot x_{ij}$$
@@ -61,14 +62,14 @@ $$\text{Minimizar } \sum_{i \in N} \sum_{j \in N, j \neq i} c_{ij} \cdot x_{ij}$
 - Cada vehículo debe salir exactamente una vez del almacén central y regresar al mismo:
   $$\sum_{i \in N, i \neq 1} x_{i1} = 1$$
   $$\sum_{j \in N, j \neq 1} x_{1j} = 1$$
-- Capacidad de los vehículos (la misma):
+- La capacidad de los vehículos es la misma:
   $$\sum_{i \in N} q_i \cdot x_{ij} \leq Q, \quad \forall j \in \{2, \ldots, n\}$$
 
 Donde:
-- N = {1,2,…,n}: Conjunto de nodos (Nodo No.1 es el almacen y el resto los clientes).
+- N = {1,2,…,n}: Conjunto de nodos (Nodo No.1 es la bodega y el resto los clientes).
 - $c_{ij}$: Costo de viajar desde el nodo \(i\) al \(j\).
 - $q_{i}$: Demanda del cliente \(i\).
-- Q : Capacidad de los vehiculos.
+- Q : Capacidad de los vehículos.
 
 **Variables de Decisión:** 
 - $x_{ij}$: Variable binaria, 1 indica que se viaja directamente del nodo ***i*** al ***j***, 0 caso contrario.
@@ -83,16 +84,14 @@ Este problema es común en logística, donde es necesario planificar rutas de en
 - Entregas de paqueterías.
 - Servicios de Emergencia.
 
- ![Diagrama del ejemplo](https://raw.githubusercontent.com/Chuchito-Boy/images/main/imagen3.avif)
-
-### Ejemplificacion
+### Ejemplificación
 
 Supongamos que tenemos los siguientes datos:
 
-N = 6 (Cantidad de nodos: 5 clientes y 1 bodega).
-Cantidad de vehiculos = 2 (con este dato, sabemos que seran 2 rutas a encontrar).
-Capacidad = 10 (la misma para todos los vehiculos).
-Nodo Origen = 1 (el primer nodo sera la bodega).
+- N = 6 (Cantidad de nodos:  1 bodega y 5 clientes).
+- Cantidad de vehículos = 2 (con este dato, sabemos que serán 2 rutas a encontrar).
+- Capacidad = 10 (la misma para todos los vehículos).
+- Nodo Origen = 1 (el primer nodo será la bodega).
 
 Matriz de Coordenadas:
 
@@ -105,6 +104,7 @@ Matriz de Coordenadas:
 5 2 2  
 6 5 5 
 ```
+
 Matriz de Demandas:
 
 
@@ -120,36 +120,41 @@ Matriz de Demandas:
 Con estos datos, podemos ejemplificar con el siguiente grafo:
  ![Diagrama del ejemplo](https://github.com/Chuchito-Boy/images/blob/main/imagen1.png)
 
-Donde los nodos estan enumerados del 1-6 con su respectiva demananda al lado.
-
-CVRP nos dice que tenemos que construir una ruta para cada vehiculo de forma aleatoria permutable, es decir, asignar todos los nodos a las rutas, de tal forma que no se repitan. 
+CVRP nos dice que tenemos que construir una ruta para cada vehículo de forma aleatoria permutable, es decir, asignar todos los nodos a las rutas, de tal forma que no se repitan. 
 
 Para ello, seguiremos los siguientes pasos: 
 
-1. Del conjunto `N = { 1, 2, 3, 4, 5, 6}` , el cual contiene todos los nodos enumerados, eliminamos el nodo bodega (nodo 1) quedando asi:
+1. Del conjunto `N = { 1, 2, 3, 4, 5, 6}` , el cual contiene todos los nodos enumerados, eliminamos el nodo bodega (nodo 1) quedando así:
 
 `N = { 2, 3, 4, 5, 6}`.
 
 2. Posteriormente, revolvemos el arreglo N para comenzar a distribuir en las rutas.
 
-`N = { 2, 3, 6, 5, 4}`
+`N = { 2, 6, 4, 3, 5}`
 
-3. Para la construccion de las rutas, nos apoyaremos de arreglos auxiliares que representaran el recorrido de cada vehiculo (en este caso seran 2).
+3. Para la construcción de las rutas, nos apoyaremos de arreglos auxiliares que representaran el recorrido de cada vehículo (en este caso eran 2).
 
 `Ruta 1 = []`
 `Ruta 2 = []`
 
-4. Comenzaremos asignando el primer nodo de N a la Ruta 1, el segundo a la Ruta 2 y asi de forma intercalada hasta repartir todos. Quedando las rutas de esta forma:
+4. Para saber el número de nodos para cada ruta, basta con realizar la división del total de elementos en N sobre la cantidad de vehículos, obteniendo `k` cantidad de elementos para cada ruta; posteriormente, se asignarán los primeros `k` elementos a la primera ruta, los siguientes `k` elementos a la siguiente y así sucesivamente. Quedando las rutas de esta forma:
 
-`Ruta 1 = [2, 6, 4]`
-`Ruta 2 = [3, 5]`
+`Nota:` En caso de que la división no sea exacta, se recomienda redondear al entero menor más cercano. Por lo que para la última ruta, se tomaran todos los nodos faltantes.
+
+`k` = `5/2` = `3`
+`Nota:` En este ejemplo se utilizó un redondeo hacia arriba.
+
+
+`Ruta 1 = [1, 2, 6, 4, 1]`
+`Ruta 2 = [1, 3, 5, 1]`
+
 
 **Nota:** Las rutas comienzan y finalizan en el nodo origen.
 
-Graficamente tenemos la primer propuesta de rutas:
+Gráficamente, tenemos la primera propuesta de rutas:
  ![Diagrama del ejemplo con rutas](https://github.com/Chuchito-Boy/images/blob/main/imagen2.png)
 
-5. Como siguiente paso, debemos calcular las distancias recorridas en cada ruta con la formula de la **distancia euclideana**.
+5. Como siguiente paso, debemos calcular las distancias recorridas en cada ruta con la fórmula de la **distancia euclidiana**.
 
 Ejemplo: Ruta 1,
 | Nodo inicial | Nodo Destino | Costo |
@@ -159,15 +164,15 @@ Ejemplo: Ruta 1,
 | 6    | 4   | Costo 3 |
 | 4    | 1   | Costo 4 |
 
-6. Sumamos los costos para obtener el total de la Ruta 1 y de igual forma para la Ruta 2. Finalmente, sumamos ambos para obtener el **costo global**, el cual es el que se desea minizar.
+6. Sumamos los costos para obtener el total de la Ruta 1 y de igual forma para la Ruta 2. Finalmente, sumamos ambos para obtener el **costo global**, el cual es el que se desea minimizar.
 
-### Generacion de solucion vecina
+### Generación de solución vecina
 
-Para generar una solucion vecina, basta con selecionar de forma aleatoria 2 nodos del conjunto N (el ultimo obtenido) e intercambiarlos. En el caso del ejemplo, tenemos que el ultimo conjunto N obtenido es `N = { 2, 3, 6, 5, 4}`. Al seleccionar aletoriamente 2 elementos: `2`, `6` y realizar el intercambio obtenemos el nuevo conjunto `N = { 6, 3, 2, 5, 4}`
+Para generar una solución vecina, basta con seleccionar de forma aleatoria 2 nodos del conjunto N (el último obtenido) e intercambiarlos. En el caso del ejemplo, tenemos que el último conjunto N obtenido es `N = { 2, 6, 4, 3, 5}`. Al seleccionar aleatoriamente 2 elementos: `2`, `6` y realizar el intercambio obtenemos el nuevo conjunto `N = { 6, 2, 4, 3, 5}`
 
 ### Metodología
 
-Una vez abordado los conceptos y ejemplos necesarios, resumiremos los pasos a seguir para la resolucion de un problema CVRP:
+Una vez abordado los conceptos y ejemplos necesarios, resumiremos los pasos a seguir para la resolución de un problema CVRP:
 
 1. Definición de Elementos:
    - 1.1 Nodos (N).
@@ -190,258 +195,321 @@ Una vez abordado los conceptos y ejemplos necesarios, resumiremos los pasos a se
 
 ### Ejemplo de Instancias:
 
-A continuacion se mostrara la estructura de una instancia en particular; indicando los elementos escenciales para su posterior implementacion:
+A continuación se mostrará la estructura de una instancia en particular; indicando los elementos esenciales para su posterior implementación:
 
 
-NAME : toy.vrp  
-COMMENT : toy instance>  
-TYPE : CVRP  
-**DIMENSION : 6**  
-EDGE_WEIGHT_TYPE : EUC_2D  
+TYPE : CVRP
+DIMENSION : 16
+TRUCKS : 4
+CAPACITY : 35
+DEPOT_SECTION : 1
+NODE_COORD_SECTION
+ 1 30 40
+ 2 37 52
+ 3 49 49
+ 4 52 64
+ 5 31 62
+ 6 52 33
+ 7 42 41
+ 8 52 41
+ 9 57 58
+ 10 62 42
+ 11 42 57
+ 12 27 68
+ 13 43 67
+ 14 58 48
+ 15 58 27
+ 16 37 69
+DEMAND_SECTION 
+1 0
+2 19
+3 30
+4 16
+5 23
+6 11
+7 31
+8 15
+9 28
+10 8
+11 8
+12 7
+13 14
+14 6
+15 19
+16 11
+END
 
-**CAPACITY : 30** 
 
-**NODE_COORD_SECTION**  
-
-1 38 46  
-2 59 46  
-3 96 42  
-4 47 61  
-5 26 15  
-6 66 6  
-
-**DEMAND_SECTION** 
-
-1 0  
-2 16  
-3 18  
-4 1  
-5 13  
-6 8  
-
-**DEPOT_SECTION** 
-
-1  
--1  
-EOF  
-
-
-### Implementacion Python
+### Implementación Python
 
 Lectura de instancias:
 
 ```python
-import numpy as np
-import random
-import copy
-import math
-# Funciones de lectura de instancias
-def getData(lenData):
+Parameters
+    ----------
+    file_path : text
+        Path de la instancia.
+
+    Returns trucks, capacity, nodes, depot, data
+    -------
+    trucks : int
+        Numero de vehículos.
+    capacity : int
+        Capacidad para cada vehículo.
+    nodes : list [int]
+        Lista de nodos, excluyendo al nodo bodega.
+    depot : int
+        Nodo bodega.
+    data : list [dict]
+        Lista de diccionarios con informacion de cada nodo: número, demanda y coordenadas.
+    """
+
+def read_data(file_path):
+    trucks = None
+    capacity = None
+    nodes = []
     data = []
-    for i in np.arange(lenData):
-        data.append([])
-        data[i].append(-1)
-        data[i].append([-1,-1])
-        data[i].append(-1)
-    return data
+    depot = None
 
-def convertListCharToString(listChar):
-    new = ""
-    for x in listChar:
-        new += x
-    return new
+    with open(file_path, 'r') as file:
+        lines = file.readlines()
 
-def read_instance(filename):
-    with open(filename) as f:
-        file = f.readlines()
+    node_coords = {}
+    node_demands = {}
 
-    string = convertListCharToString(file)
-    dimension = extract_dimension(string)
-    data = getData(dimension)
-    read_coordinates(string, data)
-    read_demands(string, data)
-    capacity = extract_capacity(string)
-    return data, capacity
+    for i, line in enumerate(lines):
+        parts = line.split()
 
-def extract_capacity(string):
-    stringCapacity = "CAPACITY : "
-    capacityIndex  = string.find(stringCapacity) + len(stringCapacity)
-    capacity = ""
-    while(string[capacityIndex] != '\n'):
-        capacity += string[capacityIndex]
-        capacityIndex += 1
-    return int(capacity)
+        keyword = parts[0]
+        if keyword == 'TRUCKS':
+            trucks = int(parts[2])
+        elif keyword == 'CAPACITY':
+            capacity = int(parts[2])
+        elif keyword == 'DEPOT_SECTION':
+            depot = int(parts[2])
+        elif keyword == 'DIMENSION':
+            num_nodes = int(parts[2])
+            nodes = list(range(1, num_nodes + 1))
+        elif keyword == 'NODE_COORD_SECTION':
+            for j in range(1, num_nodes + 1):
+                line_parts = lines[i + j].split()
+                node_coords[int(line_parts[0])] = (int(line_parts[1]), int(line_parts[2]))
+        elif keyword == 'DEMAND_SECTION':
+            for j in range(1, num_nodes + 1):
+                line_parts = lines[i + j].split()
+                node, demand = int(line_parts[0]), int(line_parts[1])   
+                node_demands[node] = demand
 
+    for node in nodes:
+        data.append({
+            'nodo': node,
+            'demanda': node_demands.get(node),
+            'coordenadas': node_coords.get(node, None)
+        })
 
-def extract_dimension(string):
-    stringDimensions = "DIMENSION : "
-    dimensionsIndex  = string.find(stringDimensions) + len(stringDimensions)
-    dimension = ""
-    while(string[dimensionsIndex] != '\n'):
-        dimension += string[dimensionsIndex]
-        dimensionsIndex += 1
-    return int(dimension)
+    nodes = [node for node in nodes if node != depot]
 
-def read_coordinates(string, data):
-    stringCord = "NODE_COORD_SECTION" 
-    initialIndex = string.find(stringCord) + len(stringCord) + 2
-
-    indicator = 0
-    i = 0
-    while(string[initialIndex] != 'D'):
-        number = ""
-        while(ord(string[initialIndex]) != 32 and string[initialIndex] != '\n'):
-            number += string[initialIndex]
-            initialIndex += 1
-        
-        if(len(number) > 0):        
-            if indicator == 0:
-                data[i][0] = (int(number) - 1)
-                indicator += 1
-            elif indicator == 1:
-                data[i][1][0] = int(number)
-                indicator += 1      
-            elif indicator == 2:
-                data[i][1][1] = int(number)
-                indicator = 0
-                i += 1
-
-        initialIndex +=1
-
-def read_demands(string, data):
-    stringCost = "DEMAND_SECTION"
-    initialIndex = string.find(stringCost) + len(stringCost) + 2
-
-    indicator = 0
-
-    i = 0
-    while(string[initialIndex] != 'D'):
-        number = ""
-        while(ord(string[initialIndex]) != 32 and string[initialIndex] != '\n'):
-            number += string[initialIndex]
-            initialIndex += 1
-        if(len(number) > 0):        
-            if indicator == 0:
-                indicator += 1
-            elif indicator == 1:
-                data[i][2] = int(number)
-                indicator = 0     
-                i += 1
-        initialIndex +=1
+    return trucks, capacity, nodes, depot, data
 ```
 
-Suponiendo que se desea leer la instancia3.txt, la carga de datos es la siguiente:
+Suponiendo que se desea leer la instancia1.txt, la carga de datos es la siguiente:
 
-`Datos:  [[0, [27, 93], 0], [1, [33, 27], 16], [2, [29, 39], 2], [3, [7, 81], 7], [4, [1, 59], 11], [5, [49, 9], 9], [6, [21, 53], 17], [7, [79, 89], 21], [8, [81, 83], 23], [9, [85, 11], 10], [10, [45, 9], 6], [11, [7, 65], 19], [12, [95, 27], 18], [13, [81, 85], 20], [14, [37, 81], 13], [15, [69, 69], 5], [16, [15, 95], 11], [17, [89, 75], 24], [18, [33, 93], 2], [19, [57, 83], 3], [20, [11, 95], 1], [21, [3, 57], 5], [22, [45, 11], 20], [23, [43, 61], 23], [24, [35, 43], 24], [25, [19, 83], 18], [26, [83, 69], 19], [27, [85, 77], 2], [28, [19, 39], 17], [29, [83, 87], 17], [30, [1, 13], 9], [31, [15, 39], 11], [32, [83, 17], 2], [33, [41, 97], 6], [34, [31, 61], 9], [35, [59, 69], 5], [36, [29, 15], 9], [37, [93, 83], 2], [38, [63, 97], 14], [39, [65, 57], 19], [40, [15, 69], 11], [41, [31, 97], 21], [42, [57, 9], 20], [43, [85, 37], 21], [44, [21, 29], 18], [45, [53, 11], 48], [46, [15, 77], 1], [47, [41, 69], 17], [48, [45, 17], 42], [49, [13, 25], 2], [50, [63, 57], 4], [51, [95, 5], 24], [52, [55, 91], 18], [53, [3, 31], 21], [54, [47, 7], 11], [55, [61, 69], 9], [56, [85, 35], 18], [57, [89, 81], 22], [58, [45, 47], 9], [59, [65, 93], 23]] `
+Ejemplo de invocación:
+```python
+file_path = '.../instancia1.txt'
+trucks, capacity, nodes, depot, data = read_data(file_path)
+print("Número de vehículos:", trucks)
+print("Capacidad de los vehículos:", capacity)
+print("Nodos:", nodes)
+print("Nodo Bodega:", depot)
+print("Datos de los nodos:", data)
+```
 
+La salida es:
+
+`Número de vehículos: 4
+Capacidad de los vehículos: 35
+Nodos: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+Nodo Bodega: 1
+Datos de los nodos: [{'nodo': 1, 'demanda': 0, 'coordenadas': (30, 40)}, {'nodo': 2, 'demanda': 19, 'coordenadas': (37, 52)}, {'nodo': 3, 'demanda': 30, 'coordenadas': (49, 49)}, {'nodo': 4, 'demanda': 16, 'coordenadas': (52, 64)}, {'nodo': 5, 'demanda': 23, 'coordenadas': (31, 62)}, {'nodo': 6, 'demanda': 11, 'coordenadas': (52, 33)}, {'nodo': 7, 'demanda': 31, 'coordenadas': (42, 41)}, {'nodo': 8, 'demanda': 15, 'coordenadas': (52, 41)}, {'nodo': 9, 'demanda': 28, 'coordenadas': (57, 58)}, {'nodo': 10, 'demanda': 8, 'coordenadas': (62, 42)}, {'nodo': 11, 'demanda': 8, 'coordenadas': (42, 57)}, {'nodo': 12, 'demanda': 7, 'coordenadas': (27, 68)}, {'nodo': 13, 'demanda': 14, 'coordenadas': (43, 67)}, {'nodo': 14, 'demanda': 6, 'coordenadas': (58, 48)}, {'nodo': 15, 'demanda': 19, 'coordenadas': (58, 27)}, {'nodo': 16, 'demanda': 11, 'coordenadas': (37, 69)}]`
 
 
 #### Creacion de solucion inicial
 
 ```python
-# Funciones principales
-def create_first_solution(data, capacity):
-    totalDemand = getTotalDemand(data)
-    totalCars = math.ceil(totalDemand / capacity)
+def create_first_solution(nodes):
+    """Función objetivo para CVRP.
 
-    while(1):
-        routes = []
-        for i in np.arange(totalCars):
-            routes.append([])
-        demands = []
+    Parameters
+    ----------
+    nodes : list [int]
+        Lista de nodos
 
-        lista = list(range(1, len(data)))
-        random.shuffle(lista)
-
-        for i in np.arange(len(data) - 1):
-            index = random.randint(0, (totalCars - 1))
-            routes[index].append(lista[i])
-
-        for route in routes:
-            demands.append(getDemand(data, route))
-        
-        isUnderDemand = True
-        for demand in demands:
-            if(demand > capacity):
-                isUnderDemand = False
-
-        if(isUnderDemand):
-            break
-
-    return routes
+    Returns shuffled_nodes
+    -------
+    shuffled_nodes : list [int]
+        Nueva lista de nodos con posiciones aleatorias
+    """
+    shuffled_nodes = random.sample(nodes, len(nodes))
+    return shuffled_nodes
 
 ```
 
-La salida es la siguiente:
+Ejemplo de invocación:
+`shuffled_nodes = create_first_solution(nodes)
+print("Lista original:", nodes)
+print("Lista revuelta:", shuffled_nodes)`
 
-`Initial solution:  [[31, 58, 3, 40, 59, 13, 5], [26, 22, 10, 57, 38, 2], [1, 39, 47, 12, 27, 23], [6, 7, 54, 46, 45], [29, 35, 8, 49, 48], [51, 50, 21, 56, 43, 20, 25], [28, 32, 33, 16, 55, 36, 44, 30, 34], [52, 14, 24, 42, 11, 37], [19, 41, 4, 15, 9, 17, 53, 18]]`
+La salida es:
+
+`Lista original: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+Lista revuelta: [4, 14, 6, 7, 5, 16, 11, 12, 8, 2, 3, 10, 9, 13, 15]`
 
 #### Creacion de solucion vecina
 
 ```python
-def create_neighbor_solution(data, actual_solution, capacity):
-    while True:
-        neighbor = copy.deepcopy(actual_solution)
-        idx = random.randint(0, (len(data) - 2))
+def create_neighbor_solution(nodes):
+    """Función para generar una solucion vecina para CVRP.
 
-        i = 0
-        chargedNode = 0
-        for route in neighbor:
-            for node in route:
-                if i == idx:
-                    chargedNode = node
-                i += 1
-            if chargedNode:
-                route.remove(chargedNode)
-                break
+    Parameters
+    ----------
+    nodes : list [int]
+        Lista de nodos
 
-        idxRoute = random.randint(0, (len(neighbor) - 1))
-        idxNode = random.randint(0, len(neighbor[idxRoute]))
-        neighbor[idxRoute].insert(idxNode, chargedNode)
-
-        return neighbor
+    Returns neighbor_nodes
+    -------
+    neighbor_nodes : list [int]
+        Nueva lista vecina de nodos 
+    """
+    neighbor_nodes = nodes[:]
+    idx1, idx2 = random.sample(range(len(nodes)), 2)
+    neighbor_nodes[idx1], neighbor_nodes[idx2] = neighbor_nodes[idx2], neighbor_nodes[idx1]
+    return neighbor_nodes
 ```
+Ejemplo de invocación:
+`neighbor_solution = create_neighbor_solution(shuffled_nodes)
+print("Lista original:", shuffled_nodes)
+print("Lista Vecina:", neighbor_solution)`
 
-La salida es la siguiente:
+La salida es:
 
-`Datos: Neighbor solution:  [[31, 58, 3, 40, 59, 13, 5], [26, 22, 10, 57, 38, 2], [1, 39, 47, 12, 27, 23], [6, 7, 54, 46, 19, 45], [29, 35, 8, 49, 48], [51, 50, 21, 56, 43, 20, 25], [28, 32, 33, 16, 55, 36, 44, 30, 34], [52, 14, 24, 42, 11, 37], [41, 4, 15, 9, 17, 53, 18]]`
-
+`Lista original: [6, 8, 3, 5, 16, 15, 10, 11, 14, 13, 12, 2, 4, 9, 7]
+Lista Vecina: [10, 8, 3, 5, 16, 15, 6, 11, 14, 13, 12, 2, 4, 9, 7]`
 
 #### Funcion objetivo
 
 ```python
-def CVRP_function(routes, data, capacity):
-    distance = 0
-    penalty = 0
-    for i in np.arange(len(routes)):
-        route_demand = getDemand(data, routes[i])
-        excess_demand = max(route_demand - capacity, 0)
-        penalty += excess_demand * capacity
-        for j in np.arange(len(routes[i]) - 1):
-            node1 = data[routes[i][j]][1]
-            node2 = data[routes[i][j+1]][1]
-            distance += euclidean_distance(node1, node2)
-    return distance + penalty
+def objective_CVRP(nodes, data, trucks, capacity, node_origin):
+    """Función objetivo para CVRP.
 
+    Parameters
+    ----------
+    nodes : list [int]
+        Lista de nodos.
+    data : list [dict]
+        Lista de diccionarios con informacion de cada nodo: número, demanda y coordenadas.
+    trucks : int
+        Numero de vehículos.
+    capacity : int
+        Capacidad para cada vehículo.
+    node_origin : int
+        Nodo bodega.
+
+    Returns sum(costs)
+    -------
+    sum(costs) : float
+        Suma de los costos de cada ruta.
+    """
+    # Calcular el número de elementos por vehículo
+    num_nodes_per_truck = len(nodes) // trucks
+    # Calcular el número de elementos restantes para el último vehículo
+    remaining_nodes = len(nodes) % trucks
+
+    # Construir las rutas para cada vehículo
+    routes = []
+    demands = []  # Lista para almacenar las demandas de cada ruta
+    costs = []    # Lista para almacenar los costos de cada ruta
+    current_node = node_origin
+    for i in range(trucks):
+        route = []
+        # Agregar el nodo de origen al inicio de la ruta
+        route.append(node_origin)
+        # Agregar los nodos correspondientes al vehículo actual
+        route_capacity = 0  # Inicializar la capacidad de la ruta
+        route_cost = 0      # Inicializar el costo de la ruta
+        for j in range(num_nodes_per_truck):
+            next_node = nodes.pop(0)  # Sacar el primer nodo de la lista
+            route.append(next_node)
+            # Sumar la demanda del nodo a la capacidad de la ruta
+            node_demand = next((d['demanda'] for d in data if d['nodo'] == next_node), None)
+            if node_demand is not None:
+                route_capacity += node_demand
+            # Calcular el costo desde el nodo anterior al actual
+            if j > 0:
+                prev_node = route[-2]
+                prev_coords = next((d['coordenadas'] for d in data if d['nodo'] == prev_node), None)
+                current_coords = next((d['coordenadas'] for d in data if d['nodo'] == next_node), None)
+                if prev_coords is not None and current_coords is not None:
+                    route_cost += euclidean_distance(prev_coords, current_coords)
+        # Si es el último vehículo, agregar los nodos restantes
+        if i == trucks - 1:
+            for _ in range(remaining_nodes):
+                next_node = nodes.pop(0)
+                route.append(next_node)
+                # Sumar la demanda del nodo a la capacidad de la ruta
+                node_demand = next((d['demanda'] for d in data if d['nodo'] == next_node), None)
+                if node_demand is not None:
+                    route_capacity += node_demand
+                # Calcular el costo desde el nodo anterior al actual
+                if j > 0:
+                    prev_node = route[-2]
+                    prev_coords = next((d['coordenadas'] for d in data if d['nodo'] == prev_node), None)
+                    current_coords = next((d['coordenadas'] for d in data if d['nodo'] == next_node), None)
+                    if prev_coords is not None and current_coords is not None:
+                        route_cost += euclidean_distance(prev_coords, current_coords)
+        # Agregar el nodo de origen al final de la ruta
+        route.append(node_origin)
+        routes.append(route)
+        demands.append(route_capacity)
+        costs.append(route_cost)
+
+    # # Imprimir y retornar las rutas, demandas y costos
+    # for i, (route, demand, cost) in enumerate(zip(routes, demands, costs)):
+    #     print(f"Ruta del vehículo {i+1}: {route}, Capacidad: {demand}, Costo: {cost}")
+    # print(sum(costs))
+    return sum(costs)
 ```
+Ejemplo de invocacion:
+`
+#Descomentar en la funcion objeitvo
+for i, (route, demand, cost) in enumerate(zip(routes, demands, costs)):
+        print(f"Ruta del vehículo {i+1}: {route}, Capacidad: {demand}, Costo: {cost}")
+    print("El costo global es: ",sum(costs))
+`
+
+
+`
+#Desde main
+objective_CVRP(neighbor_solution, data, trucks, capacity, depot)
+`
+
+La salida es:
+`
+Ruta del vehículo 1: [1, 16, 2, 4, 1], Capacidad: 46, Costo: 36.209372712298546
+Ruta del vehículo 2: [1, 15, 8, 5, 1], Capacidad: 57, Costo: 44.93003102156281
+Ruta del vehículo 3: [1, 12, 9, 14, 1], Capacidad: 41, Costo: 41.672652222804686
+Ruta del vehículo 4: [1, 13, 7, 3, 6, 10, 11, 1], Capacidad: 102, Costo: 91.38181411842345
+El costo global es:  214.19387007508948
+`
 
 #### Funciones auxiliares
 
 ```python
-def euclidean_distance(point1, point2):
-    return np.sqrt((point1[0] - point2[0])**2 + (point1[1] - point2[1])**2)
+import math
 
-def getTotalDemand(data):
-    totalDemand = 0
-    for element in data:
-        totalDemand += element[2]
-    return totalDemand
-
-def getDemand(data, route):
-    demand = 0
-    for node in route:
-        demand += data[node][2]
-    return demand
-
-
+def euclidean_distance(coord1, coord2):
+    """Calcular la distancia euclidiana entre 2 puntos"""
+    return math.sqrt((coord1[0] - coord2[0])**2 + (coord1[1] - coord2[1])**2)
 ```
+
+### TIP: ...
