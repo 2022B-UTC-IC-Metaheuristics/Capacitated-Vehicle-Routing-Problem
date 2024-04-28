@@ -314,13 +314,12 @@ def read_data(file_path):
     return trucks, capacity, nodes, depot, data
 ```
 
-Suponiendo que se desea leer la instancia1.txt, la carga de datos es la siguiente:
+Suponiendo que se desea leer esta instancia, la carga de datos es la siguiente:
 
 Ejemplo de invocación:
 
-
 ```python
-file_path = '.../instancia1.txt'
+file_path = '.../instancia.txt'
 trucks, capacity, nodes, depot, data = read_data(file_path)
 print("Número de vehículos:", trucks)
 print("Capacidad de los vehículos:", capacity)
@@ -364,15 +363,15 @@ Ejemplo de invocación:
 
 ```python
 shuffled_nodes = create_first_solution(nodes)
-print("Lista original:", nodes)
-print("Lista revuelta:", shuffled_nodes)
+print("Solucion Inicial:", nodes)
+print("Solucion Aleatoria:", shuffled_nodes)
 ```
 
 La salida es:
 
 ```
-Lista original: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
-Lista revuelta: [4, 14, 6, 7, 5, 16, 11, 12, 8, 2, 3, 10, 9, 13, 15]
+Solucion Inicial: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+Solucion Aleatoria: [4, 14, 6, 7, 5, 16, 11, 12, 8, 2, 3, 10, 9, 13, 15]
 ```
 
 #### Creacion de solucion vecina
@@ -400,15 +399,15 @@ Ejemplo de invocación:
 
 ```python
 neighbor_solution = create_neighbor_solution(shuffled_nodes)
-print("Lista original:", shuffled_nodes)
-print("Lista Vecina:", neighbor_solution)
+print("Solucion Inicial:", shuffled_nodes)
+print("Solucion Vecina:", neighbor_solution)
 ```
 
 La salida es:
 
 ```
-Lista original: [6, 8, 3, 5, 16, 15, 10, 11, 14, 13, 12, 2, 4, 9, 7]
-Lista Vecina: [10, 8, 3, 5, 16, 15, 6, 11, 14, 13, 12, 2, 4, 9, 7]
+Solucion Inicial: [6, 8, 3, 5, 16, 15, 10, 11, 14, 13, 12, 2, 4, 9, 7]
+Solucion Vecina: [10, 8, 3, 5, 16, 15, 6, 11, 14, 13, 12, 2, 4, 9, 7]
 ```
 
 #### Funcion objetivo
@@ -491,18 +490,15 @@ def objective_CVRP(nodes, data, trucks, capacity, node_origin):
     # # Imprimir y retornar las rutas, demandas y costos
     # for i, (route, demand, cost) in enumerate(zip(routes, demands, costs)):
     #     print(f"Ruta del vehículo {i+1}: {route}, Capacidad: {demand}, Costo: {cost}")
-    # print(sum(costs))
+    print("El costo global es: ",sum(costs))
     return sum(costs)
 ```
 
 Ejemplo de invocacion:
 
-
 ```python
-#Descomentar en la funcion objeitvo
-for i, (route, demand, cost) in enumerate(zip(routes, demands, costs)):
-        print(f"Ruta del vehículo {i+1}: {route}, Capacidad: {demand}, Costo: {cost}")
-    print("El costo global es: ",sum(costs))
+#Descomentar en la funcion objetivo
+print("El costo global es: ",sum(costs))
 ```
 
 ```python
@@ -513,10 +509,6 @@ objective_CVRP(neighbor_solution, data, trucks, capacity, depot)
 La salida es:
 
 ```
-Ruta del vehículo 1: [1, 16, 2, 4, 1], Capacidad: 46, Costo: 36.209372712298546
-Ruta del vehículo 2: [1, 15, 8, 5, 1], Capacidad: 57, Costo: 44.93003102156281
-Ruta del vehículo 3: [1, 12, 9, 14, 1], Capacidad: 41, Costo: 41.672652222804686
-Ruta del vehículo 4: [1, 13, 7, 3, 6, 10, 11, 1], Capacidad: 102, Costo: 91.38181411842345
 El costo global es:  214.19387007508948
 ```
 
