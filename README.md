@@ -434,10 +434,11 @@ def objective_CVRP(nodes, data, trucks, capacity, node_origin):
     sum(costs) : float
         Suma de los costos de cada ruta.
     """
+    nodes_copy = nodes.copy()
     # Calcular el número de elementos por vehículo
-    num_nodes_per_truck = len(nodes) // trucks
+    num_nodes_per_truck = len(nodes_copy) // trucks
     # Calcular el número de elementos restantes para el último vehículo
-    remaining_nodes = len(nodes) % trucks
+    remaining_nodes = len(nodes_copy) % trucks
 
     # Construir las rutas para cada vehículo
     routes = []
@@ -452,7 +453,7 @@ def objective_CVRP(nodes, data, trucks, capacity, node_origin):
         route_capacity = 0  # Inicializar la capacidad de la ruta
         route_cost = 0      # Inicializar el costo de la ruta
         for j in range(num_nodes_per_truck):
-            next_node = nodes.pop(0)  # Sacar el primer nodo de la lista
+            next_node = nodes_copy.pop(0)  # Sacar el primer nodo de la lista
             route.append(next_node)
             # Sumar la demanda del nodo a la capacidad de la ruta
             node_demand = next((d['demanda'] for d in data if d['nodo'] == next_node), None)
@@ -468,7 +469,7 @@ def objective_CVRP(nodes, data, trucks, capacity, node_origin):
         # Si es el último vehículo, agregar los nodos restantes
         if i == trucks - 1:
             for _ in range(remaining_nodes):
-                next_node = nodes.pop(0)
+                next_node = nodes_copy.pop(0)
                 route.append(next_node)
                 # Sumar la demanda del nodo a la capacidad de la ruta
                 node_demand = next((d['demanda'] for d in data if d['nodo'] == next_node), None)
@@ -487,11 +488,7 @@ def objective_CVRP(nodes, data, trucks, capacity, node_origin):
         demands.append(route_capacity)
         costs.append(route_cost)
 
-    # # Imprimir y retornar las rutas, demandas y costos
-    # for i, (route, demand, cost) in enumerate(zip(routes, demands, costs)):
-    #     print(f"Ruta del vehículo {i+1}: {route}, Capacidad: {demand}, Costo: {cost}")
-    print("El costo global es: ",sum(costs))
-    return sum(costs)
+    return int(sum(costs))
 ```
 
 Ejemplo de invocacion:
