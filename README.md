@@ -528,6 +528,7 @@ Por ejemplo:
 import functools
 # Se fijan los parametros (excepto 'nodes')
 fn = functools.partial(objective_CVRP, data=data, trucks=trucks, capacity=capacity, node_origin=depot)
-# Ejemplo de llamada en la Metaheuristica
-fn(solution)
+initial_solution = create_first_solution(nodes)
+miTabu = TabuSearch(...)
+miTabu.search(fn)
 ```
