@@ -506,7 +506,7 @@ objective_CVRP(neighbor_solution, data, trucks, capacity, depot)
 La salida es:
 
 ```
-El costo global es:  214.19387007508948
+El costo global es:  214
 ```
 
 #### Funciones auxiliares
