@@ -186,16 +186,23 @@ Una vez abordado los conceptos y ejemplos necesarios, resumiremos los pasos a se
 2. Obtener solución inicial:
    - 2.1 Quitar nodo origen de N.
    - 2.2 Revolver elementos de N.
-   - 2.3 Repartir elementos de N a cada ruta.
+   - 2.3 Retornas la nueva lista
 3. Obtener solución vecina:
    - 3.1 Seleccionar 2 elementos de N.
    - 3.2 Intercambiarlos.
-   - 3.3 Repartir elementos de N a cada ruta.
+   - 3.3 Retornar la nueva lista
 4. Obtener costo global:
    - 4.1 Obtener costo de cada ruta.
    - 4.2 Sumarlas para obtener el **costo global** a minimizar.
 
-### Ejemplo de Instancias:
+### Instancias:
+
+| Nombre archivo | Dimensión | Vehículos | Capacidad | Bodega | Mejor valor encontrado | Solucion |
+|----------------|-----------|-----------|-----------|--------|--------------|----------------|
+| instancia.txt  | 16        | 4         | 35        | 1      | 91           | [8, 6, 15, 10, 14, 3, 11, 2, 7, 9, 4, 13, 16, 5, 12] |
+| instancia2.txt | 32        | 5         | 100       | 1      | 446          | ---  |
+| instancia3.txt | 60        | 9         | 100       | 1      | 812          | ---   |
+| instancia4.txt | 80        | 10        | 100       | 1      | 894          | ---   |
 
 A continuación se mostrará la estructura de una instancia en particular; indicando los elementos esenciales para su posterior implementación:
 
@@ -488,18 +495,20 @@ def objective_CVRP(nodes, data, trucks, capacity, node_origin):
         demands.append(route_capacity)
         costs.append(route_cost)
 
+    # Descomentar opcional
+    # print("El costo global es: ",sum(costs))
     return int(sum(costs))
 ```
 
 Ejemplo de invocacion:
 
 ```python
-#Descomentar en la funcion objetivo
+# Descomentar en la funcion objetivo
 print("El costo global es: ",sum(costs))
 ```
 
 ```python
-#Desde main
+# Ejemplo de invotacion
 objective_CVRP(neighbor_solution, data, trucks, capacity, depot)
 ```
 
@@ -509,7 +518,7 @@ La salida es:
 El costo global es:  214
 ```
 
-#### Funciones auxiliares
+#### Funcion auxiliar y NECESARIA
 
 ```python
 import math
@@ -530,5 +539,5 @@ import functools
 fn = functools.partial(objective_CVRP, data=data, trucks=trucks, capacity=capacity, node_origin=depot)
 initial_solution = create_first_solution(nodes)
 miTabu = TabuSearch(...)
-miTabu.search(fn)
+miTabu.search(fn)   
 ```
