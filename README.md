@@ -451,6 +451,7 @@ def objective_CVRP(nodes, data, trucks, capacity, node_origin):
     routes = []
     demands = []  # Lista para almacenar las demandas de cada ruta
     costs = []    # Lista para almacenar los costos de cada ruta
+    penalties = []  # Lista para almacenar las penalizaciones
     current_node = node_origin
     for i in range(trucks):
         route = []
@@ -472,7 +473,8 @@ def objective_CVRP(nodes, data, trucks, capacity, node_origin):
                 prev_coords = next((d['coordenadas'] for d in data if d['nodo'] == prev_node), None)
                 current_coords = next((d['coordenadas'] for d in data if d['nodo'] == next_node), None)
                 if prev_coords is not None and current_coords is not None:
-                    route_cost += euclidean_distance(prev_coords, current_coords)
+                    # route_cost += euclidean_distance(prev_coords, current_coords)
+                    route_cost += math.sqrt((prev_coords[0] - current_coords[0])**2 + (prev_coords[1] - current_coords[1])**2)
         # Si es el último vehículo, agregar los nodos restantes
         if i == trucks - 1:
             for _ in range(remaining_nodes):
@@ -488,16 +490,29 @@ def objective_CVRP(nodes, data, trucks, capacity, node_origin):
                     prev_coords = next((d['coordenadas'] for d in data if d['nodo'] == prev_node), None)
                     current_coords = next((d['coordenadas'] for d in data if d['nodo'] == next_node), None)
                     if prev_coords is not None and current_coords is not None:
-                        route_cost += euclidean_distance(prev_coords, current_coords)
+                        # route_cost += euclidean_distance(prev_coords, current_coords)
+                        route_cost += math.sqrt((prev_coords[0] - current_coords[0])**2 + (prev_coords[1] - current_coords[1])**2)
+        
+        # Verificar si la capacidad de la ruta supera la capacidad del camión
+        if route_capacity > capacity:
+            # Calcular la penalización y añadirla a la lista de penalizaciones
+            penalty = capacity + (capacity * (route_capacity - capacity))
+            penalties.append(penalty)
+        
         # Agregar el nodo de origen al final de la ruta
         route.append(node_origin)
         routes.append(route)
         demands.append(route_capacity)
         costs.append(route_cost)
 
-    # Descomentar opcional
-    # print("El costo global es: ",sum(costs))
-    return int(sum(costs))
+        # Calcular la suma de las penalizaciones
+    total_penalty = sum(penalties)
+    # print("PENALIZACION:", total_penalty)
+    # Sumar las penalizaciones al costo total
+    total_cost = sum(costs) + total_penalty
+    # print("COSTO SIN PENALIZACION:",total_cost)
+
+    return int(total_cost)
 ```
 
 Ejemplo de invocacion:
@@ -518,15 +533,14 @@ La salida es:
 El costo global es:  214
 ```
 
-#### Funcion auxiliar y NECESARIA
+`NOTA:` La función costo ya incluye penalización. Esta se añade cuando alguna ruta excede la capacidad del vehículo. Al calcular las demandas de cada ruta, se verifica que cada una no exceda la capacidad del vehículo. En caso de excederla, se calcula una penalización:
 
-```python
-import math
+**capacidad_ruta = capacidad_ruta + penalización,**
 
-def euclidean_distance(coord1, coord2):
-    """Calcular la distancia euclidiana entre 2 puntos"""
-    return math.sqrt((coord1[0] - coord2[0])**2 + (coord1[1] - coord2[1])**2)
-```
+Donde:
+
+penalización = excedente_de_capacidad + capacidad_vehículo
+
 
 ### TIP: 
 
